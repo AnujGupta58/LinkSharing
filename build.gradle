@@ -23,6 +23,7 @@ apply plugin:"org.grails.grails-gsp"
 repositories {
     mavenLocal()
     maven { url "https://repo.grails.org/grails/core" }
+   // mavenRepo "http://localhost:8081/artifactory/plugins-releases-local/"
 }
 
 dependencies {
@@ -59,6 +60,7 @@ dependencies {
     testRuntime "org.seleniumhq.selenium:selenium-htmlunit-driver:2.47.1"
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
     runtime 'mysql:mysql-connector-java:5.1.40'
+//    compile "org.grails.plugins:rateable:0.7.1"
 }
 
 bootRun {

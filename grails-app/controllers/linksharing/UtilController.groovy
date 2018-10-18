@@ -11,7 +11,7 @@ class UtilController {
         log.debug("Debug Message!");
         log.info("Indexing")
         log.info(params.toQueryString())
-        render "asdjkashjdhskja"
+        render "Started"
     }
 
     def show(){

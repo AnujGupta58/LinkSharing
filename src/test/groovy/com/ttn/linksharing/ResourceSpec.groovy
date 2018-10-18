@@ -1,9 +1,9 @@
-package linksharing
+package com.ttn.linksharing
 
-import grails.testing.web.controllers.ControllerUnitTest
+import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class FirstControllerSpec extends Specification implements ControllerUnitTest<FirstController> {
+class ResourceSpec extends Specification implements DomainUnitTest<Resource> {
 
     def setup() {
     }
