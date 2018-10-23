@@ -10,10 +10,11 @@ class ResourceRating {
 
 
     static constraints = {
-        user(unique: 'resource')                   // ResourceRating can be given by a user only one time for a resource
+        user(nullable:false)                   // ResourceRating can be given by a user only one time for a resource
+        resource(nullable:false,unique: 'user')                   // ResourceRating can be given by a user only one time for a resource
         score(nullable: false, range: 1..5)        //  Resource score should not be more than 5 and less than 1
-        dateCreated(date: Date,nullable: true)
-        lastUpdated(date: Date,nullable: true)
+        dateCreated(nullable: true)
+        lastUpdated(nullable: true)
 
     }
 }

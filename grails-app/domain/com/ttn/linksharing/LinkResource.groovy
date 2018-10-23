@@ -1,10 +1,13 @@
 package com.ttn.linksharing
 
 class LinkResource extends Resource{
-    String URL
+    String url
 
-    
+    @Override
+    String toString() {
+        return "url ${url}"
+    }
     static constraints = {
-        URL(url: validate())
+        url(url: true)
     }
 }

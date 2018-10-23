@@ -42,4 +42,9 @@ class User {
     String getFullName(){
         [firstName,lastName].findAll{it}.join(",")
     }
+
+    @Override
+    public String toString() {
+        return "Username=${email}"
+    }
 }

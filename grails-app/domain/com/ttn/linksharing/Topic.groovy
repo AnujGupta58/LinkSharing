@@ -11,7 +11,10 @@ class Topic {
     Date dateCreated
     Date lastUpdated
 
-
+ /*   @Override
+    String toString() {
+        return "Name of Topic: ${name} and username ${createdBy} "
+    }*/
     static constraints = {
         name(nullable: false,blank: false,unique: ['createdBy'])          //Topic name should be not null, not blank
         visibility(nullable: false,blank: false, inList: Visibility.values() as List)  //Visibility should not be null
@@ -22,6 +25,15 @@ class Topic {
     }
 
     static hasMany = [subscriptions:Subscription,resources:Resource]
+
+    void afterInsert(){
+
+        withNewSession {
+            Subscription subscription=new Subscription(topic: this,seriousness: Subscription.Seriousness.VERY_SERIOUS,user:this.createdBy)
+            subscription.save(failOnError:true)
+
+        }
+    }
 }
 
 
