@@ -1,12 +1,74 @@
 package com.ttn.linksharing
 
+import grails.testing.gorm.DataTest
 import grails.testing.gorm.DomainUnitTest
 import grails.testing.web.controllers.ControllerUnitTest
 import grails.validation.ValidationException
 import spock.lang.*
 
-class UserControllerSpec extends Specification implements ControllerUnitTest<UserController>, DomainUnitTest<User> {
+class UserControllerSpec extends Specification implements ControllerUnitTest<UserController>, DataTest {
 
+
+    Class[] getDomainClassesToMock() {
+        [User, Topic, Subscription]
+    }
+
+    def "Show public topic"() {
+        setup:
+        User user = new User(email: "anujgupta@tothenew.com", password: "qwerty", isActive: true, confirmPassword: "qwerty", admin: false, photo: null, firstName: "firstadmin", lastName: "lastadmin")
+        user.save()
+
+        Topic topic = new Topic(id: 1, name: "Topic", visibility: Topic.Visibility.PUBLIC, createdBy: user)
+        topic.save()
+
+        when:
+        controller.show(id)
+
+        then:
+        response.text == "Success"
+
+        where:
+        id = 1
+    }
+
+    def "User will returned to login page for private topic and user not in session"() {
+        setup:
+        User user = new User(email: "anujgupta@tothenew.com", password: "qwerty", isActive: true, confirmPassword: "qwerty", admin: false, photo: null, firstName: "firstadmin", lastName: "lastadmin")
+        user.save()
+
+        Topic topic = new Topic(id: 1, name: "Topic", visibility: Topic.Visibility.PRIVATE, createdBy: user)
+        topic.save()
+
+        when:
+        controller.show(id)
+
+        then:
+        response.redirectUrl == "/login/index"
+
+        where:
+        id = 1
+    }
+
+    def "User will returned to login page for private topic and user not subscribed"() {
+        setup:
+        User user = new User(email: "anujgupta@tothenew.com", password: "qwerty", isActive: true, confirmPassword: "qwerty", admin: false, photo: null, firstName: "firstadmin", lastName: "lastadmin")
+        user.save()
+
+        session.user = user
+
+        Topic topic = new Topic(id: 1, name: "Topic", visibility: Topic.Visibility.PRIVATE, createdBy: user)
+        topic.save()
+
+        when:
+        controller.show(id)
+
+        then:
+        response.redirectUrl == "/login/index"
+
+        where:
+        id = 1
+    }
+/*
     def populateValidParams(params) {
         assert params != null
 
@@ -217,7 +279,7 @@ class UserControllerSpec extends Specification implements ControllerUnitTest<Use
         then:"The user is redirected to index"
         response.redirectedUrl == '/user/index'
         flash.message != null
-    }
+    }*/
 }
 
 

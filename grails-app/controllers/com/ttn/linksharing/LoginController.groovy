@@ -4,19 +4,19 @@ class LoginController {
 
     def index() {
         log.info("i am in login action")
-
-//        render ">>>>>>>>${session["user"]}"
+        if (session['user']) {
+            forward controller: 'User', action: 'index'
+        } else {
+            render ">>>>>>>>${session["user"]}"
+        }
     }
 
     def register() {
         User user = new User(params)
-        if (user.save(failOnError: true, flush: true)) {
-            render(params)
-            render "success"
-            render "Registered Successfully"
-        }
-        else{
-
+        if (user.save()) {
+            render "Register Successfully"
+        } else {
+            render "Error ${user.errors.allErrors.collect {message(code:it)}.join(", ")}"
         }
     }
 
