@@ -3,6 +3,10 @@ package com.ttn.linksharing
 class Topic {
     enum Visibility {
         PRIVATE,PUBLIC
+
+        String convert(String seriousness){
+            Visibility.valueOf(seriousness)
+        }
     }
 
     String name;
@@ -22,6 +26,9 @@ class Topic {
         dateCreated(date: Date,nullable: true)
         lastUpdated(date: Date,nullable: true)
 
+    }
+    static mapping = {
+        sort name: 'asc'
     }
 
     static hasMany = [subscriptions:Subscription,resources:Resource]

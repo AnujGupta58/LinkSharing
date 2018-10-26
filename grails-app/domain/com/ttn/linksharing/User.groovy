@@ -32,6 +32,7 @@ class User {
 
     static mapping = {
         photo(sqlType: 'longblob')
+        sort id:'desc'
     }
 
     static hasMany = [topics:Topic,subscriptions:Subscription,resources:Resource,readingItems:ReadingItem]
