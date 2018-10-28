@@ -130,5 +130,5 @@ environments:
                 jdbcInterceptors: ConnectionState
                 defaultTransactionIsolation: 2 # TRANSACTION_READ_COMMITTED
 server:
-    contextPath: /helloworld
+    contextPath: /LinkSharing
 

@@ -10,8 +10,9 @@ class LoginCheckInterceptor {
         }*/
 
         boolean before() {
-            log.info "......................."+controllerName
-            log.info ">>>>>>>>>>>>>>>>>..................."
+            /*log.info "......................."+controllerName
+            log.info ">>>>>>>>>>>>>>>>>..................."*/
+
             true
         }
 

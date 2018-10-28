@@ -3,24 +3,28 @@ package com.ttn.linksharing
 class TopicController {
 
     def index() {
-
+        render"Topic Index"
     }
 
-    def saveTopic(Topic topic,String seriousness){
-//        log.info topic.read(1)
+    def show(Long id) {
+        Topic topic = Topic.get(id)
+        render "Data collected ${topic.name}"
+    }
 
-        Topic topic1=new Topic(params)
-        topic1.read()
-       /* if(topic1.save(failOError:true,flush:true))
-        {
-            flash.message="Success"
-        }
-        else{
-            log.info "topic1 not saved due to ${topic1.errors.allErrors}"
-        }
-*/
-        Topic.Visibility.valueOf(seriousness)
+    def delete(Long id) {
+        Topic topic = Topic.load(id)
+        log.info("//////////////////////${topic}")
+        topic.delete()
+        render "Deleted"
+    }
 
+    def save() {
+        if(session.user){
+            Topic topic=new Topic(name: params.name,visibility: params.visibility,createdBy: user)
+            if(topic.save(flush: true,failOnError: true)){
+                render "Topic Saved Successfully"
+            }
+        }
     }
 }
 

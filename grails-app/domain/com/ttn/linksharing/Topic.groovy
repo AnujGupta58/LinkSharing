@@ -4,11 +4,11 @@ class Topic {
     enum Visibility {
         PRIVATE,PUBLIC
 
-        String convert(String seriousness){
-            Visibility.valueOf(seriousness)
-        }
     }
 
+    static String convertVisibilty(String visibility){
+        valueOf(visibility)
+    }
     String name;
     Visibility visibility
     User createdBy

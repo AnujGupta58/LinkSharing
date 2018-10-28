@@ -4,6 +4,9 @@ class Subscription {
     enum Seriousness{
         SERIOUS, CASUAL, VERY_SERIOUS
     }
+    static String convertSeriousness(String seriousness) {
+        valueOf(seriousness)
+    }
     Seriousness seriousness
     User user;
     Topic topic
@@ -17,5 +20,12 @@ class Subscription {
        // user(unique: 'topic')
         dateCreated(date: Date,nullable: true)
         lastUpdated(date: Date,nullable: true)
+    }
+
+    static mapping = {
+        seriousness defaultValue:"'SERIOUS'"
+        topic lazy: false
+        user lazy: false
+
     }
 }

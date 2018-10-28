@@ -3,7 +3,7 @@ package com.ttn.linksharing
 class LoginController {
 
     def index() {
-        log.info("i am in login action")
+        log.info("login INDEX action")
 
 //        render ">>>>>>>>${session["user"]}"
     }
@@ -15,9 +15,9 @@ class LoginController {
             render "success"
             render "Registered Successfully"
         }
-        else{
+      /*  else{
 
-        }
+        }*/
     }
 
     def loginhandler(String username, String password) {
