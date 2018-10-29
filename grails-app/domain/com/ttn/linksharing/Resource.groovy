@@ -17,4 +17,16 @@ static mapping = {
     description(sqlType: 'text' )
 }
     static hasMany = [ratings:ResourceRating,readingItems:ReadingItem]
+
+    Integer totalVotes(){
+        Resource resource= Resource.countByRatings
+        return 1
+    }
+
+    Integer totalScore(){
+        Resource resource
+        ResourceRating resourceRating = ResourceRating.countByScore()
+        return 1
+    }
 }
+

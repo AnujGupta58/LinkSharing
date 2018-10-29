@@ -6,8 +6,8 @@ class TopicController {
         render"Topic Index"
     }
 
-    def show(Long id) {
-        Topic topic = Topic.get(id)
+    def show(Long id,ResourceSearchCO resourceSearchCO) {
+        Topic topic = Topic.get(id:  id,resources: resourceSearchCO)
         render "Data collected ${topic.name}"
     }
 
