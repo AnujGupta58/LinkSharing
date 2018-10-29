@@ -4,7 +4,7 @@ class User {
 
     String email
     String password
-    String confirmPassword
+        String confirmPassword
     String firstName
     String lastName
     byte[] photo

@@ -11,6 +11,8 @@ class SubscriptionControllerSpec extends Specification implements ControllerUnit
 
     def "Testing of subscription save"() {
         setup:
+        User user = new User(email: "anujgupta@tothenew.com", password: "qwerty", isActive: true, confirmPassword: "qwerty", admin: false, photo: null, firstName: "firstadmin", lastName: "lastadmin")
+        user.save()
         Subscription subscription = new Subscription(user: user, topic: topic, seriousness: Subscription.convertSeriousness(seriousness))
         subscription.save(flush: true)
 
@@ -22,7 +24,7 @@ class SubscriptionControllerSpec extends Specification implements ControllerUnit
 
         where:
         id=1
-        seriousness="PRIVATE"
+        seriousness="CASUAL"
     }
 
     def "Testing of subscription update"() {

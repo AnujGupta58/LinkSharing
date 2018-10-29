@@ -3,6 +3,7 @@ package com.ttn.linksharing
 
 class SubscriptionController {
 
+    SubscriptionService subscriptionService
     def index() {
         render "Subscription index"
     }
@@ -10,12 +11,14 @@ class SubscriptionController {
 
     def save(Long id,String seriousness){
         Topic topic=Topic.get(id)
-       // log.info("!!!!!!!!!!!!!!!!!!!!${topic}!!!!!!!!!")
         User user=session.user
-        if(user){
+        if(session.user){
             Subscription subscription=new Subscription(user: user,topic: topic,seriousness: Subscription.convertSeriousness(seriousness))
-            subscription.save(flush:true)
-            render "subscription saved successfully"
+            if(subscription.save(flush:true)){
+                render "subscription saved successfully"
+            } else{
+                render "invalid"
+            }
         }
         else{
             redirect(controller: 'login', action: 'index')
@@ -23,17 +26,12 @@ class SubscriptionController {
     }
 
     def update(Long id){
-        def subscription = Subscription.get(id)
-        subscription.seriousness= "CASUAL"
-        subscription.save(flush:true)
+        subscriptionService.update(id)
         render "Success ${subscription.seriousness}"
-        log.info subscription.seriousness
     }
 
     def delete(Long id){
-        Subscription subscription=Subscription.get(id)
-      //  subscription..add( )
-        subscription.delete()
+        subscriptionService.delete(id)
         render"Subscription Deleted"
     }
 }

@@ -3,14 +3,14 @@ package com.ttn.linksharing
 class LoginController {
 
     def index() {
-        log.info("login INDEX action")
+            log.info("login INDEX action")
 
 //        render ">>>>>>>>${session["user"]}"
     }
 
     def register() {
         User user = new User(params)
-        if (user.save(failOnError: true, flush: true)) {
+        if (user.save(flush: true)) {
             render(params)
             render "success"
             render "Registered Successfully"

@@ -21,7 +21,7 @@ class UserController {
         Topic topic = Topic.get(id)
 //        println topic.read(1L)
         if (topic) {
-            if (topic.visibility == Topic.Visibility.PRIVATE) {
+            if (topic.visibility == Topic.Visibility.PUBLIC) {
                 render "Success of Visibilty Public"
             } else {
                 User user = session.user

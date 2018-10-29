@@ -5,7 +5,7 @@ class Subscription {
         SERIOUS, CASUAL, VERY_SERIOUS
     }
     static String convertSeriousness(String seriousness) {
-        valueOf(seriousness)
+            seriousness.valueOf(seriousness)
     }
     Seriousness seriousness
     User user;
@@ -16,7 +16,7 @@ class Subscription {
     static constraints = {
         user(nullable: false)                        //User,topic, seriousness should not be null
         topic(nullable: false,unique: 'user')        /*User should not be able to subscribe to topic multiple times */
-        seriousness(nullable: false, inList:Seriousness.values() as List)
+        seriousness(nullable: false)
        // user(unique: 'topic')
         dateCreated(date: Date,nullable: true)
         lastUpdated(date: Date,nullable: true)
