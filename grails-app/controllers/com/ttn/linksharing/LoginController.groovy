@@ -3,21 +3,21 @@ package com.ttn.linksharing
 class LoginController {
 
     def index() {
-            log.info("login INDEX action")
-
-//        render ">>>>>>>>${session["user"]}"
+        log.info("i am in login action")
+        if (session['user']) {
+            forward controller: 'User', action: 'index'
+        } else {
+            render ">>>>>>>>${session["user"]}"
+        }
     }
 
     def register() {
         User user = new User(params)
-        if (user.save(flush: true)) {
-            render(params)
-            render "success"
-            render "Registered Successfully"
+        if (user.save()) {
+            render "Register Successfully"
+        } else {
+            render "Error ${user.errors.allErrors.collect {message(code:it)}.join(", ")}"
         }
-      /*  else{
-
-        }*/
     }
 
     def loginhandler(String username, String password) {
