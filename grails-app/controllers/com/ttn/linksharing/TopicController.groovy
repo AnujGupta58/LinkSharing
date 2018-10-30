@@ -2,6 +2,7 @@ package com.ttn.linksharing
 
 class TopicController {
 
+    TopicService topicService
     def index() {
         render"Topic Index"
     }
@@ -12,13 +13,13 @@ class TopicController {
     }
 
     def delete(Long id) {
-        Topic topic = Topic.load(id)
-        log.info("//////////////////////${topic}")
-        topic.delete()
+        topicService.delete(id)
         render "Deleted"
     }
 
     def save() {
+        User user = session.user
+        log.info("Current Logged In User : ${user?.firstName}")
         if(session.user){
             Topic topic=new Topic(name: params.name,visibility: params.visibility,createdBy: user)
             if(topic.save(flush: true,failOnError: true)){

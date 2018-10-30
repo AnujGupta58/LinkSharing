@@ -33,14 +33,14 @@ class Topic {
 
     static hasMany = [subscriptions:Subscription,resources:Resource]
 
-    void afterInsert(){
+    /*void afterInsert(){
 
         withNewSession {
             Subscription subscription=new Subscription(topic: this,seriousness: Subscription.Seriousness.VERY_SERIOUS,user:this.createdBy)
             subscription.save(failOnError:true)
 
         }
-    }
+    }*/
 }
 
 
