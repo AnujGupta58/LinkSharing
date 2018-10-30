@@ -8,7 +8,7 @@ class TopicController {
 
     def show(Long id,ResourceSearchCO resourceSearchCO) {
         Topic topic = Topic.get(id:  id,resources: resourceSearchCO)
-        render "Data collected ${topic.name}"
+        render "Data collected ${resourceSearchCO.topicId }"
     }
 
     def delete(Long id) {

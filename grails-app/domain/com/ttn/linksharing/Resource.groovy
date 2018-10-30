@@ -19,8 +19,9 @@ static mapping = {
     static hasMany = [ratings:ResourceRating,readingItems:ReadingItem]
 
     Integer totalVotes(){
-        Resource resource= Resource.countByRatings
-        return 1
+        Topic topic = Topic.get(1)
+        List sub = Subscription.findAllByTopic(topic)
+
     }
 
     Integer totalScore(){

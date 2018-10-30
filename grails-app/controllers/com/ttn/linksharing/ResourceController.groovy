@@ -21,7 +21,7 @@ class ResourceController {
     }
 
     def search(){
-        Resource resource = Resource.findByTopic(Topic.findByVisibility(Topic.Visibility.PUBLIC))
+      //  Resource resource = Resource.findByTopic(Topic.findByVisibility(Topic.Visibility.PUBLIC))
         if(SearchCO.q)
         {
             ResourceSearchCO.visibility= Topic.Visibility.PUBLIC
