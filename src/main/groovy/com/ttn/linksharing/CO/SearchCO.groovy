@@ -1,4 +1,4 @@
-package com.ttn.linksharing
+package com.ttn.linksharing.CO
 
 
 // Used for text search
@@ -8,5 +8,4 @@ class SearchCO {
     Integer offset
     String order
     String sort
-
 }

@@ -1,5 +1,8 @@
 package com.ttn.linksharing
 
+import com.ttn.linksharing.VO.RatingInfoVO
+
+
 abstract class Resource {
 
     String description
@@ -10,24 +13,57 @@ abstract class Resource {
 
 
     static constraints = {
-        dateCreated(date: Date,nullable: true)
-        lastUpdated(date: Date,nullable: true)
+        dateCreated(date: Date, nullable: true)
+        lastUpdated(date: Date, nullable: true)
     }
-static mapping = {
-    description(sqlType: 'text' )
-}
-    static hasMany = [ratings:ResourceRating,readingItems:ReadingItem]
+    static mapping = {
+        description(sqlType: 'text')
+    }
+    static hasMany = [ratings: ResourceRating, readingItems: ReadingItem]
 
-    Integer totalVotes(){
-        Topic topic = Topic.get(1)
-        List sub = Subscription.findAllByTopic(topic)
+    static transients = ['ratinginfo']
 
+/*     RatingInfoVO getRatingInfo(){
+        List result = ResourceRating.createCriteria().list {
+            projections{
+                count("topic", 'topicCount')
+                sum("score")
+                avg("score")
+            }
+            groupProperty('topicCount',"topic")
+        }
+        new RatingInfoVO(totalVotes: result[0], totalScore: result[1], averageScore: result[2])
+    }*/
+
+    static List totalVotes() {
+            List totalVoteCount = ResourceRating.createCriteria().list{
+                projections {
+                    count()
+                }
+                createAlias("resource",'r')
+                groupProperty('r.topic')
+                groupProperty('r.createdBy')
+            }
+        return totalVoteCount
     }
 
-    Integer totalScore(){
-        Resource resource
-        ResourceRating resourceRating = ResourceRating.countByScore()
-        return 1
+    static Integer totalScore(){
+        Integer totalScoreCount= ResourceRating.createCriteria().get {
+            projections{
+                sum("score")
+            }
+        }
+        return totalScoreCount
     }
+
+    static Integer AvgScore(){
+        Integer Avg=ResourceRating.createCriteria().get {
+            projections{
+                avg("score")
+            }
+        }
+        return Avg
+    }
+
 }
 

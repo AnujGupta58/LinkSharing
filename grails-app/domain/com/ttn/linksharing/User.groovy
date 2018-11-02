@@ -1,10 +1,12 @@
 package com.ttn.linksharing
 
+import com.ttn.linksharing.CO.SearchCO
+
 class User {
 
     String email
     String password
-        String confirmPassword
+    String confirmPassword
     String firstName
     String lastName
     byte[] photo
@@ -14,39 +16,56 @@ class User {
     Date lastUpdated
 
     static constraints = {
-        email(unique: true, blank: false, email: true,nullable: false)          // Email should be unique, email type, not null, not blank
-        password(size: 5..10, nullable: false, blank: false)    //Password should be not null, not blank and minimum 5 charactes
+        email(unique: true, blank: false, email: true, nullable: false)
+        // Email should be unique, email type, not null, not blank
+        password(size: 5..10, nullable: false, blank: false)
+        // Password should be not null, not blank and minimum 5 charactes
         firstName(nullable: false)
         lastName(nullable: false)                               //FirstName,LastName shoule not be null and not blank
         photo(nullable: true)                                   // Photo, Admin and Active field can be null
         admin(nullable: true)
-        confirmPassword(size: 5..10, bindable:true, nullable: false, blank: false, validator: { val, obj ->
+        confirmPassword(size: 5..10, bindable: true, nullable: false, blank: false, validator: { val, obj ->
             if (val != obj.password) {
                 return 'password mismatch'
             }
             return true
         })
-        dateCreated(date: Date,nullable: true)
-        lastUpdated(date: Date,nullable: true)
+        dateCreated(date: Date, nullable: true)
+        lastUpdated(date: Date, nullable: true)
     }
 
     static mapping = {
         photo(sqlType: 'longblob')
-        sort 'id':'desc'
-       // [sort: 'id' , order: 'desc']
+        sort 'id': 'desc'
+        // [sort: 'id' , order: 'desc']
     }
 
-    static hasMany = [topics:Topic,subscriptions:Subscription,resources:Resource,readingItems:ReadingItem]
-                                        // User hasMany topics,subscriptions,readingItems and resources -
+    static hasMany = [topics: Topic, subscriptions: Subscription, resources: Resource, readingItems: ReadingItem]
+    // User hasMany topics,subscriptions,readingItems and resources -
 
-    static transients = ['fullName','confirmPassword']
+    static transients = ['fullName', 'confirmPassword']
 
-    String getFullName(){
-        [firstName,lastName].findAll{it}.join(",")
+    String getFullName() {
+        [firstName, lastName].findAll { it }.join(",")
+    }
+
+    static List getUnReadResource(SearchCO co,User user) {
+        List unReaditem = ReadingItem.createCriteria().list(max: 9, offset: 0) {
+            projections {
+                eq("isRead", false)
+                createAlias("resource", 'r')
+                if (co.q) {
+                    ilike("r.description", "%${co.q}%")
+                }
+                eq('user', user)
+                //groupProperty("user")
+            }
+        }
+        return unReaditem
     }
 
     @Override
     public String toString() {
-        return "Username=${email}"
+        return getFirstName()
     }
 }

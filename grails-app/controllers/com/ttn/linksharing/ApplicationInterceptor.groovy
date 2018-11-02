@@ -6,7 +6,7 @@ class ApplicationInterceptor {
        /* log.info("---------/////////")
         log.info("${params}"+session["user"] )
         log.info("---------")*/
-        log.info(">>>>>>>>>>>>> Before of Application Interceptor")
+        //log.info(">>>>>>>>>>>>> Before of Application Interceptor")
         return true
     }
 

@@ -11,8 +11,7 @@ class LoginController {
         }
     }
 
-    def register() {
-        User user = new User(params)
+    def register(User user) {
         if (user.save()) {
             render "Register Successfully"
         } else {
@@ -26,7 +25,7 @@ class LoginController {
         if (user) {
             if (user.isActive) {
                 session["user"] = user
-                redirect(controller: 'login', action: 'index')
+                redirect(controller: 'user', action: 'index')
             } else {
                 render "Your Account is not Active"
             }

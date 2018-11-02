@@ -1,12 +1,14 @@
 package com.ttn.linksharing
 
+import com.ttn.linksharing.VO.TopicVO
+
 class Topic {
     enum Visibility {
-        PRIVATE,PUBLIC
+        PRIVATE, PUBLIC
 
     }
 
-    static String convertVisibilty(String visibility){
+    static String convertVisibilty(String visibility) {
         valueOf(visibility)
     }
     String name;
@@ -15,23 +17,23 @@ class Topic {
     Date dateCreated
     Date lastUpdated
 
- /*   @Override
+    @Override
     String toString() {
-        return "Name of Topic: ${name} and username ${createdBy} "
-    }*/
+        return "Topic: ${name} "
+    }
     static constraints = {
-        name(nullable: false,blank: false,unique: ['createdBy'])          //Topic name should be not null, not blank
-        visibility(nullable: false,blank: false, inList: Visibility.values() as List)  //Visibility should not be null
+        name(nullable: false, blank: false, unique: ['createdBy'])          //Topic name should be not null, not blank
+        visibility(nullable: false, blank: false, inList: Visibility.values() as List)  //Visibility should not be null
         createdBy(nullable: false)              // Created by should not be null
-        dateCreated(date: Date,nullable: true)
-        lastUpdated(date: Date,nullable: true)
+        dateCreated(date: Date, nullable: true)
+        lastUpdated(date: Date, nullable: true)
 
     }
     static mapping = {
         sort name: 'asc'
     }
 
-    static hasMany = [subscriptions:Subscription,resources:Resource]
+    static hasMany = [subscriptions: Subscription, resources: Resource]
 
     /*void afterInsert(){
 
@@ -41,12 +43,21 @@ class Topic {
 
         }
     }*/
+
+    static List getTrendingTopics(){
+        List ResourceCount = Resource.createCriteria().list {
+            projections {
+                createAlias("topic", "t")
+                count("topic", 'counting')
+                property("t.name")
+            }
+            groupProperty("topic")
+            order('counting', 'desc')
+            order("b.name",'desc')
+            maxResults(5)
+        }
+        return ResourceCount
+    }
 }
-
-
-
-
-
-
 
 // Visibility is enum type so for constraints we need to change enum to list to check for each values

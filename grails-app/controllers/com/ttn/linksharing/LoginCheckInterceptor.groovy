@@ -12,11 +12,12 @@ class LoginCheckInterceptor {
         boolean before() {
             /*log.info "......................."+controllerName
             log.info ">>>>>>>>>>>>>>>>>..................."*/
-            if(session.user){
+    /*        if(session.user){
                 redirect(controller: 'login',action:'index')
                 true
             }
-            false
+            false*/
+            true
         }
 
         boolean after() {
