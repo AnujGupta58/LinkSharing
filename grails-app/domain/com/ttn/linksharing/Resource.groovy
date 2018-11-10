@@ -1,5 +1,6 @@
 package com.ttn.linksharing
 
+import com.ttn.linksharing.CO.ResourceSearchCO
 import com.ttn.linksharing.VO.RatingInfoVO
 
 
@@ -63,6 +64,19 @@ abstract class Resource {
             }
         }
         return Avg
+    }
+
+    static namedQueries={
+        search{ ResourceSearchCO rco ->
+            if(rco.topicId){
+                eq('topicId',rco.topicId)
+            }
+            if(rco.visibility)
+            {
+                eq('PUBLIC',rco.visibility)
+            }
+
+        }
     }
 
 }

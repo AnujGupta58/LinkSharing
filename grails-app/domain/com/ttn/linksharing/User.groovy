@@ -16,14 +16,14 @@ class User {
     Date lastUpdated
 
     static constraints = {
-        email(unique: true, blank: false, email: true, nullable: false)
+        email(unique: true, blank: false, email: true, nullable: false, bindable:true)
         // Email should be unique, email type, not null, not blank
-        password(size: 5..10, nullable: false, blank: false)
+        password(size: 5..10, nullable: false, blank: false, bindable:true)
         // Password should be not null, not blank and minimum 5 charactes
-        firstName(nullable: false)
-        lastName(nullable: false)                               //FirstName,LastName shoule not be null and not blank
-        photo(nullable: true)                                   // Photo, Admin and Active field can be null
-        admin(nullable: true)
+        firstName(nullable: false, bindable:true)
+        lastName(nullable: false, bindable:true)                               //FirstName,LastName shoule not be null and not blank
+        photo(nullable: true, bindable:true)                                   // Photo, Admin and Active field can be null
+        admin(nullable: true, bindable:true)
         confirmPassword(size: 5..10, bindable: true, nullable: false, blank: false, validator: { val, obj ->
             if (val != obj.password) {
                 return 'password mismatch'
@@ -63,6 +63,16 @@ class User {
         }
         return unReaditem
     }
+
+    List<Topic> getSubscribedTopic(){
+        List<Topic> subscribedTopic=[]
+        if(this.subscriptions)
+            this.subscriptions.each{
+                subscribedTopic.add(it.topic)
+            }
+        return subscribedTopic
+    }
+
 
     @Override
     public String toString() {

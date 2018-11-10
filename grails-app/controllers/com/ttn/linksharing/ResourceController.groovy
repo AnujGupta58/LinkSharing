@@ -11,9 +11,18 @@ class ResourceController {
         render "index"
     }
 
-    def trying(){
-        render "text"
+    def create(){
+
+        User user=session.user
+        if(session.user)
+        {
+            Topic topic= Topic.findByCreatedBy(user)
+            Resource linkResource= new LinkResource(description: params.description,createdBy: user,topic: topic,url: params.url)
+            linkResource.save(flush:true,failOnError:true)
+            render "Resource created successfully"
+        }
     }
+
     def delete(Long id) {
         Resource resource = Resource.get(id)
         try {
@@ -51,6 +60,7 @@ class ResourceController {
         if(SearchCO.q)
         {
             ResourceSearchCO.visibility= Topic.Visibility.PUBLIC
+            ResourceSearchCO.namedQueries
         }
     }
 }

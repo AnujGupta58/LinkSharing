@@ -1,6 +1,7 @@
 package com.ttn.linksharing
 
 import com.ttn.linksharing.CO.ResourceSearchCO
+import com.ttn.linksharing.VO.TopicVO
 
 class TopicController {
 
@@ -9,14 +10,12 @@ class TopicController {
         render"Topic Index"
     }
 
-    def show(Long id, ResourceSearchCO resourceSearchCO) {
-        Topic topic = Topic.get(id:  id,resources: resourceSearchCO)
-        render "Data collected ${resourceSearchCO.topicId }"
-    }
+    def show(Long id) {
+        def info=topicService.getInfo(id)
+        if(info){
+            render(view: 'showTopic',model: [topicVO:info])
+        }
 
-    def delete(Long id) {
-        topicService.delete(id)
-        render "Deleted"
     }
 
     def save() {

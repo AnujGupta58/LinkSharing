@@ -1,7 +1,5 @@
 package com.ttn.linksharing
 
-import com.ttn.linksharing.CO.SearchCO
-
 class UserController {
 
     def auth(){
@@ -13,10 +11,10 @@ class UserController {
             redirect(controller: 'user',action:'index')
         }
     }
-    def index(SearchCO co) {
-            List UnReadItemLeft=User.getUnReadResource(co,session.user)
-            render "UnReadResources --->  ${UnReadItemLeft}"
-//            render "User Dashboard"
+    def index() {
+        /*    List UnReadItemLeft=User.getUnReadResource(co,session.user)
+            render "UnReadResources --->  ${UnReadItemLeft}"*/
+            render (view: "index")
     }
 
     def show(Integer id) {

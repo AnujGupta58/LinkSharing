@@ -15,4 +15,16 @@ class ReadingItemController {
             render "Invalid Input"
         }
     }
+
+    def save(Long id) {
+        User user = session.user
+       // log.info("Current Logged In User : ${user?.firstName}")
+        Resource resource = Resource.get(id)
+        if(session.user){
+            ReadingItem readingItem=new ReadingItem(user: user, resource: resource, isRead: params.isRead)
+            if(readingItem.save(flush: true,failOnError: true)){
+                render "ReadingItem Saved Successfully"
+            }
+        }
+    }
 }

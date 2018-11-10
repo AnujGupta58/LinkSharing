@@ -1,5 +1,6 @@
 package com.ttn.linksharing
 
+import com.ttn.linksharing.VO.TopicVO
 import grails.gorm.transactions.Transactional
 
 @Transactional
@@ -19,7 +20,11 @@ class TopicService {
         topic.delete()
     }
 
-    def show(Long id){
-        Topic topic = Topic.get(id)
+    def getInfo(Long id){
+        Topic topic = Topic.findById(id)
+        if(topic){
+            TopicVO topicVO =new TopicVO(id: id, name: topic.name,createdBy: topic.createdBy,visibility: topic.visibility,count: topic.subscriptions.size())
+        }
+       // return topicVO
     }
 }
