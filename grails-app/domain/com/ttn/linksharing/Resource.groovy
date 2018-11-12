@@ -66,6 +66,18 @@ abstract class Resource {
         return Avg
     }
 
+    static List getTopPost(){
+        List topPost=ResourceRating.createCriteria().list {
+            projections {
+                createAlias('resource','r')
+                groupProperty('r.id')
+                count('r.id','count')
+            }
+            order('count','desc')
+        }
+        return topPost
+    }
+
     static namedQueries={
         search{ ResourceSearchCO rco ->
             if(rco.topicId){

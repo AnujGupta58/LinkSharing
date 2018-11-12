@@ -33,14 +33,13 @@ class ResourceController {
         } catch (Exception e) {
             e.printStackTrace()
         }
-
     }
 
     def show(){
         List votes=Resource.totalVotes()
         Integer score=Resource.totalScore()
         Integer avgscore=Resource.AvgScore()
-        List counter=Topic.getTrendingTopics()
+        List counter=Topic.getTren  dingTopics()
         render "TOTAL SCORE ${score} and VOTES ${votes} and AVG_SCORE ${avgscore}   and TRENDING TOPICS ${counter}"
 
       /*  RatingInfoVO ratingInfo=Resource.getRatingInfo()
@@ -55,12 +54,11 @@ class ResourceController {
         }
     }
 
-    def search(){
+    def search(ResourceSearchCO resourceSearchCO){
       //  Resource resource = Resource.findByTopic(Topic.findByVisibility(Topic.Visibility.PUBLIC))
-        if(SearchCO.q)
+        if(resourceSearchCO.q)
         {
             ResourceSearchCO.visibility= Topic.Visibility.PUBLIC
-            ResourceSearchCO.namedQueries
         }
     }
 }

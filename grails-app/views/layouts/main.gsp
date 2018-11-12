@@ -8,8 +8,8 @@
     %{--</title>--}%
     %{--<meta name="viewport" content="width=device-width, initial-scale=1"/>--}%
     %{--<asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>--}%
-    <asset:stylesheet src="application.css"/>
-    <asset:stylesheet src="customstyle.css"/>
+   %{-- <asset:stylesheet src="application.css"/>
+    <asset:stylesheet src="customstyle.css"/>--}%
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -23,6 +23,7 @@
 </head>
 
 <body>
+<div class="container">
 <header class="page-header well" style="padding-bottom: 50px;margin-left: 10px;margin-right: 10px;">
     <div class="col-lg-4">
         <span>
@@ -50,10 +51,11 @@
 
             <g:render template="/resource/documentResource"/>
 
-            <span class="col-lg-3 dropdown">
-                <button class="btn btn-default dropdown-toggle" data-toggle="dropdown">
-                    <i class="fas fa-user" style="font-size:24px"></i>
-                        ${session.user}
+
+            <div class="col-lg-3 dropdown">
+                <button class="dropdown-toggle" data-toggle="dropdown">
+                    <i class="fa fa-user" style="font-size:24px"></i>
+                   ${session.user}
                     <span class="caret"></span>
                 </button>
                 <ul class="dropdown-menu">
@@ -61,14 +63,16 @@
                     <li><a href="#">users</a></li>
                     <li><a href="#">Topic</a></li>
                     <li><a href="#">post</a></li>
-                    <li><a href="#">logout</a></li>
+                    <li><g:link controller="login" action="logout">logout</g:link></li>
                 </ul>
-            </span>
             </div>
 
-        </g:if>
 
+
+        </g:if>
+    </div>
 </header>
+</div>
 
 <div class="body">
 

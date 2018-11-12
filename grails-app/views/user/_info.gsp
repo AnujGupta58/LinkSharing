@@ -16,11 +16,11 @@
 
             <div class="col-lg-9">
                 <div class="text">
-                    <h4>Anuj Gupta</h4>
+                    <h4>${session.user.getFullName()}</h4>
                 </div>
 
                 <div class="text-muted">
-                    @Anuj
+                    ${session.user.email}
                 </div>
 
                 <div class="col-lg-4" style="    padding-left: 0px;">

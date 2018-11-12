@@ -46,7 +46,7 @@ class User {
     static transients = ['fullName', 'confirmPassword']
 
     String getFullName() {
-        [firstName, lastName].findAll { it }.join(",")
+        [firstName, lastName].findAll { it }.join(" ")
     }
 
     static List getUnReadResource(SearchCO co,User user) {
@@ -73,6 +73,14 @@ class User {
         return subscribedTopic
     }
 
+    Integer getSubscriptionCount(){
+        if(this.subscriptions){
+            return this.subscriptions.size()
+        }
+        else {
+            return 0
+        }
+    }
 
     @Override
     public String toString() {

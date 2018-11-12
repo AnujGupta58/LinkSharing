@@ -24,6 +24,7 @@ class TopicService {
         Topic topic = Topic.findById(id)
         if(topic){
             TopicVO topicVO =new TopicVO(id: id, name: topic.name,createdBy: topic.createdBy,visibility: topic.visibility,count: topic.subscriptions.size())
+            return topicVO
         }
        // return topicVO
     }

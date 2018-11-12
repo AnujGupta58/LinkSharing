@@ -17,9 +17,9 @@
             </div>
 
             <div class="media-body">
-                <h4 class="media-heading">Uday Pratap Singh</h4>
+                <h4 class="media-heading">Recent Share</h4>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Java</p>
 
                 <div><a href="#" style="  color: red; "><i class="fab fa-google-plus-g"></i></a>  <a href="#"
                                                                                                      style="  color: blue; "><i
@@ -39,9 +39,9 @@
             </div>
 
             <div class="media-body">
-                <h4 class="media-heading">Uday Pratap Singh</h4>
+                <h4 class="media-heading">Recent Share</h4>
 
-                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                <p>Grails</p>
 
                 <div><a href="#" style="  color: red; "><i class="fab fa-google-plus-g"></i></a>  <a href="#"
                                                                                                      style="  color: blue; "><i

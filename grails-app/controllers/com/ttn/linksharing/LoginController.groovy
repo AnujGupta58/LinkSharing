@@ -40,9 +40,11 @@ class LoginController {
                 return false
             } else {
                 flash.message = "Your Account is not Active"
+                render(view: 'index')
             }
         } else {
             flash.message ="User not Found"
+            render(view: 'index')
             // (flash.error = "User..... not..... found")
         }
         render(view: "index", model: [username:username,password:password])
@@ -62,7 +64,7 @@ class LoginController {
         }
         render(view: 'forgotPassword')
     }
-    def logoutAction() {
+    def logout() {
         session.invalidate()
 //        redirect(action: loginhandler())
         forward action: 'index'
