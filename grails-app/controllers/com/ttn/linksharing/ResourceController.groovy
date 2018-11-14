@@ -11,14 +11,13 @@ class ResourceController {
         render "index"
     }
 
-    def create(){
+    def create() {
 
-        User user=session.user
-        if(session.user)
-        {
-            Topic topic= Topic.findByCreatedBy(user)
-            Resource linkResource= new LinkResource(description: params.description,createdBy: user,topic: topic,url: params.url)
-            linkResource.save(flush:true,failOnError:true)
+        User user = session.user
+        if (session.user) {
+            Topic topic = Topic.findByCreatedBy(user)
+            Resource linkResource = new LinkResource(description: params.description, createdBy: user, topic: topic, url: params.url)
+            linkResource.save(flush: true, failOnError: true)
             render "Resource created successfully"
         }
     }
@@ -28,37 +27,47 @@ class ResourceController {
         try {
             if (resource.id == id) {
                 resource.delete()
-                render "Resource Deleted"
+                //render "Resource Deleted"
+                redirect(controller:'user',action:'index')
             }
         } catch (Exception e) {
             e.printStackTrace()
         }
     }
 
-    def show(){
-        List votes=Resource.totalVotes()
+    def show() {
+        /*List votes=Resource.totalVotes()
         Integer score=Resource.totalScore()
         Integer avgscore=Resource.AvgScore()
-        List counter=Topic.getTren  dingTopics()
-        render "TOTAL SCORE ${score} and VOTES ${votes} and AVG_SCORE ${avgscore}   and TRENDING TOPICS ${counter}"
+        List counter=Topic.getTrendingTopics()
+        render "TOTAL SCORE ${score} and VOTES ${votes} and AVG_SCORE ${avgscore}   and TRENDING TOPICS ${counter}"*/
 
-      /*  RatingInfoVO ratingInfo=Resource.getRatingInfo()
-        render "Info  ${ratingInfo}"*/
+        /*  RatingInfoVO ratingInfo=Resource.getRatingInfo()
+          render "Info  ${ratingInfo}"*/
+        render(view: '/resource/showResource',model: [resource:response])
     }
 
-    def topPost(){
-        if(session.user)
-        {
-            List votes=Resource.totalVotes()
+    def topPost() {
+        if (session.user) {
+            List votes = Resource.totalVotes()
             render "TOP POST --> ${votes}"
         }
     }
 
-    def search(ResourceSearchCO resourceSearchCO){
-      //  Resource resource = Resource.findByTopic(Topic.findByVisibility(Topic.Visibility.PUBLIC))
-        if(resourceSearchCO.q)
-        {
-            ResourceSearchCO.visibility= Topic.Visibility.PUBLIC
+    def search(ResourceSearchCO resourceSearchCO) {
+        //  Resource resource = Resource.findByTopic(Topic.findByVisibility(Topic.Visibility.PUBLIC))
+        if (resourceSearchCO.q) {
+            ResourceSearchCO.visibility = Topic.Visibility.PUBLIC
+        }
+        else{
+            flash.error="criteria not set"
+        }
+    }
+
+    def viewLink(Long id){
+        LinkResource linkResource = Resource.get(id)
+        if(linkResource){
+            redirect(url:linkResource.url)
         }
     }
 }

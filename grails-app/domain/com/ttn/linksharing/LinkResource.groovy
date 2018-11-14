@@ -10,4 +10,9 @@ class LinkResource extends Resource{
     static constraints = {
         url(url: true)
     }
+
+    @Override
+    def getType() {
+        return true
+    }
 }

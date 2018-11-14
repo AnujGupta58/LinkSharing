@@ -1,12 +1,12 @@
 package com.ttn.linksharing
 
+import com.ttn.linksharing.enums.Seriousness
+
 class Subscription {
-    enum Seriousness{
-        SERIOUS, CASUAL, VERY_SERIOUS
-    }
     static Seriousness convertSeriousness(String seriousness) {
             seriousness.valueOf(seriousness)
     }
+
     Seriousness seriousness
     User user;
     Topic topic

@@ -1,5 +1,7 @@
 package com.ttn.linksharing
 
+import com.ttn.linksharing.CO.UserCO
+
 class LoginController {
 
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
@@ -7,28 +9,32 @@ class LoginController {
     def index() {
         log.info("i am in login action")
         if (session.user) {
-            render (view: "index")
-            //forward controller: 'User', action: 'index'
+            //render (view: "index")
+            forward controller: 'User', action: 'index'
         } else {
             //render ">>>>>>>>${session["user"]}"
         }
     }
 
- /*   def test(){
-        render(view:'homePage')
-    }*/
+    /*   def test(){
+           render(view:'homePage')
+       }*/
 //    firstName:params.firstName,lastName:params.lastName,email:params.email,password: params.password,confirmPassword:params.confirmPassword,photo:params.photo
     def register() {
-        User user =new User(params)
+       User user = new User([firstName: params.firstName, lastName: params.lastName, email: params.email, password: params.password, confirmPassword: params.confirmPassword, photo: params.photo])
 //        user.properties=params
+      //  UserCO user = new UserCO( firstName: params.firstName, lastName: params.lastName, email: params.email, password: params.password, confirmPassword: params.confirmPassword, photo: params.photo )
+      //  user.isActive=true
         log.info("params here---------------->>>>>> ${params.email}")
         if (user.save()) {
             //render (view: "_register")
-            flash.message=" User Registered Successfully"
+            session.user=user
+            forward(controller:'user' , action:'index')
+            flash.message = " User Registered Successfully"
         } else {
-            render "Error ${user.errors.allErrors.collect {message(code:it)}.join(", ")}"
+            render "Error ${user.errors.allErrors.collect { message(code: it) }.join(", ")}"
         }
-        render(view: "index", model: [firstName:firstName,lastName:lastName,email:email,password: password,confirmPassword:confirmPassword,photo:photo])
+        render(view: "index", model: [firstName: firstName, lastName: lastName, email: email, password: password, confirmPassword: confirmPassword, photo: photo])
     }
 
     def loginhandler(String username, String password) {
@@ -43,27 +49,25 @@ class LoginController {
                 render(view: 'index')
             }
         } else {
-            flash.message ="User not Found"
+            flash.message = "User not Found"
             render(view: 'index')
             // (flash.error = "User..... not..... found")
         }
-        render(view: "index", model: [username:username,password:password])
+        render(view: "index", model: [username: username, password: password])
     }
 
-    def forgotPassword(){
-        User user=User.findByEmail(params.email)
-        if(user)
-        {
-            session.user=user
-            flash.message="Password changed Successfully"
-            forward(controller:'user',action:'index')
-        }
-        else
-        {
-            flash.error="Unable to change Password"
+    def forgotPassword() {
+        User user = User.findByEmail(params.email)
+        if (user) {
+            session.user = user
+            flash.message = "Password changed Successfully"
+            forward(controller: 'user', action: 'index')
+        } else {
+            flash.error = "Unable to change Password"
         }
         render(view: 'forgotPassword')
     }
+
     def logout() {
         session.invalidate()
 //        redirect(action: loginhandler())

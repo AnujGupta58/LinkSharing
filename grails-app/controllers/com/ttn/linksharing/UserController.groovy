@@ -36,4 +36,13 @@ class UserController {
             redirect(controller: 'login', action: 'index')
         }
     }
+
+    def showAllUsers(){
+        List<User> users= User.findAllByAdmin(false)
+        users.each{
+            println users.email
+            println users.firstName
+        }
+        render (view: '/user/userList')
+    }
 }

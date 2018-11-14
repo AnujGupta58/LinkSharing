@@ -1,7 +1,10 @@
 package com.ttn.linksharing
 
 import com.ttn.linksharing.CO.SearchCO
+import com.ttn.linksharing.VO.RatingInfoVO
+import groovy.beans.Bindable
 
+@Bindable
 class User {
 
     String email
@@ -18,18 +21,22 @@ class User {
     static constraints = {
         email(unique: true, blank: false, email: true, nullable: false, bindable:true)
         // Email should be unique, email type, not null, not blank
-        password(size: 5..10, nullable: false, blank: false, bindable:true)
+        password(size: 5..10, nullable: false, blank: false, bindable:true,validator: { val, obj ->
+            if (obj.confirmPassword) {
+                    return (val==obj.confirmPassword) ? true : ['mismatch.password']
+            }
+        })
         // Password should be not null, not blank and minimum 5 charactes
         firstName(nullable: false, bindable:true)
         lastName(nullable: false, bindable:true)                               //FirstName,LastName shoule not be null and not blank
         photo(nullable: true, bindable:true)                                   // Photo, Admin and Active field can be null
         admin(nullable: true, bindable:true)
-        confirmPassword(size: 5..10, bindable: true, nullable: false, blank: false, validator: { val, obj ->
+     /*   confirmPassword(size: 5..10, bindable: true, nullable: false, blank: false, validator: { val, obj ->
             if (val != obj.password) {
                 return 'password mismatch'
             }
             return true
-        })
+        })*/
         dateCreated(date: Date, nullable: true)
         lastUpdated(date: Date, nullable: true)
     }
@@ -81,6 +88,46 @@ class User {
             return 0
         }
     }
+
+    def canDeleteResource(Long id){
+        Resource resource= Resource.get(id)
+        if(resource){
+            if(resource.delete(flush:true)){
+                log.info("deleted")
+                return true
+            }
+            else{
+                resource.errors.allErrors.collect {message(code:it).join(",")}
+                log.info("unable to delete")
+                return false
+            }
+        }
+        else {
+            log.info("no resource found")
+            return false
+        }
+
+    }
+
+    def isSubscribed(Long id){
+        Topic topic =Topic.findById(id)
+        Subscription subscription= Subscription.findByTopic(topic)
+        if(subscription){
+            log.info("Subscription found")
+            return true
+        }
+        else{
+            log.info("Subscription not found")
+        }
+     /*   List<Subscription> subscription= Subscription.createCriteria().list {
+            projections{
+
+            }
+
+        }*/
+
+    }
+
 
     @Override
     public String toString() {

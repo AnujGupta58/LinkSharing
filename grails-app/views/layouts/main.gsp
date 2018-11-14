@@ -1,23 +1,17 @@
 <!doctype html>
 <html lang="en" class="no-js">
 <head>
-    %{--<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>--}%
-    %{--<meta http-equiv="X-UA-Compatible" content="IE=edge"/>--}%
-    %{--<title>--}%
-        %{--<g:layoutTitle default="Grails"/>--}%
-    %{--</title>--}%
-    %{--<meta name="viewport" content="width=device-width, initial-scale=1"/>--}%
-    %{--<asset:link rel="icon" href="favicon.ico" type="image/x-ico"/>--}%
-   %{-- <asset:stylesheet src="application.css"/>
-    <asset:stylesheet src="customstyle.css"/>--}%
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    %{--<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">--}%
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
+    %{--<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js "></script>--}%
     <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
 
     <asset:stylesheet src="application.css"/>
-    <asset:stylesheet src="customstyle.css"/>
 
     <g:layoutHead/>
 </head>
@@ -51,23 +45,37 @@
 
             <g:render template="/resource/documentResource"/>
 
-
-            <div class="col-lg-3 dropdown">
-                <button class="dropdown-toggle" data-toggle="dropdown">
-                    <i class="fa fa-user" style="font-size:24px"></i>
-                   ${session.user}
-                    <span class="caret"></span>
+       %{--     <div class="col-lg-3 dropdown">
+                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                    ${session.user}
                 </button>
-                <ul class="dropdown-menu">
-                    <li><a href="#">profile</a></li>
-                    <li><a href="#">users</a></li>
-                    <li><a href="#">Topic</a></li>
-                    <li><a href="#">post</a></li>
+                <div class="dropdown-menu">
+                    <li><g:link controller="login" action="logout">profile</g:link></li>
+                    <li><g:link controller="user" action="showAllUsers">users</g:link></li>
+                    <li><g:link controller="topic" action="show">topic</g:link></li>
+                    <li><g:link controller="resource" action="show">Resources</g:link></li>
+                    <li><g:link controller="login" action="logout">post</g:link></li>
                     <li><g:link controller="login" action="logout">logout</g:link></li>
+                </div>
+            </div>--}%
+            <div class="dropdown  col-lg-3" style="padding: 0px">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#"><i class="fa fa-user"
+                                                                              style="font-size:24px"></i>
+                    ${session.user.getFullName()}
+                    <span class="caret"></span></a>
+                <ul class="dropdown-menu">
+                    <li><g:link controller="user" action="editProfile">Profile</g:link></li>
+                    <li><g:link controller="topic" action="show">topic</g:link></li>
+                    <li><g:link controller="resource" action="show">Resources</g:link></li>
+                    <li><g:link controller="login" action="logout">post</g:link></li>
+                    <g:if test="${session.user.admin}">
+                        <li><g:link controller="user" action="showAllUsers">Users</g:link></li>
+                    %{--<li><g:link controller="user" action="showTopics">Topic</g:link></li>--}%
+                    %{--<li><g:link controller="resource" action="showPosts">Post</g:link></li>--}%
+                    </g:if>
+                    <li><g:link controller="login" action="logout">Logout</g:link></li>
                 </ul>
             </div>
-
-
 
         </g:if>
     </div>

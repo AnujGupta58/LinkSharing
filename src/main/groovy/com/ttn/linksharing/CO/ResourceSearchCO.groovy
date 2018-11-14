@@ -1,11 +1,12 @@
 package com.ttn.linksharing.CO
 
 import com.ttn.linksharing.Topic
+import com.ttn.linksharing.enums.Visibility
 import grails.validation.Validateable
 
 class ResourceSearchCO extends SearchCO implements Validateable{
     Long topicId
-    Topic.Visibility visibility
+    Visibility visibility
 
     static namedQueries={
         search{ResourceSearchCO rco ->

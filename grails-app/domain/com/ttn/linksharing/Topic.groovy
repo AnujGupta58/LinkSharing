@@ -1,13 +1,9 @@
 package com.ttn.linksharing
 
 import com.ttn.linksharing.VO.TopicVO
+import com.ttn.linksharing.enums.Visibility
 
 class Topic {
-    enum Visibility {
-        PRIVATE, PUBLIC
-
-    }
-
     static String convertVisibilty(String visibility) {
         valueOf(visibility)
     }
@@ -35,16 +31,16 @@ class Topic {
 
     static hasMany = [subscriptions: Subscription, resources: Resource]
 
-    void afterInsert(){
+    void afterInsert() {
 
         withNewSession {
-            Subscription subscription=new Subscription(topic: this,seriousness: Subscription.Seriousness.VERY_SERIOUS,user:this.createdBy)
-            subscription.save(failOnError:true)
+            Subscription subscription = new Subscription(topic: this, seriousness: Subscription.Seriousness.VERY_SERIOUS, user: this.createdBy)
+            subscription.save(failOnError: true)
 
         }
     }
 
-    static List getTrendingTopics(){
+    static List getTrendingTopics() {
         List ResourceCount = Resource.createCriteria().list {
             projections {
                 createAlias("topic", "t")
@@ -53,11 +49,34 @@ class Topic {
             }
             groupProperty("topic")
             order('counting', 'desc')
-            order("b.name",'desc')
+            order("b.name", 'desc')
             maxResults(5)
         }
         return ResourceCount
     }
+
+    def isPublic(Topic topic) {
+        if (topic.visibility.PUBLIC) {
+            log.info("Topic is public")
+            return true
+        } else {
+            log.info("Topic is private")
+            return false
+        }
+    }
+
+    def canViewedBy(User user) {
+        Subscription subscription = Subscription.findByUserAndTopic(user, this)
+        if (isPublic(this) || subscription || user.isAdmin()) {
+            log.info("Can be viewed by ${user}")
+            return true
+        }
+        else{
+            log.info("cannot be viewed")
+            return false
+        }
+    }
 }
 
-// Visibility is enum type so for constraints we need to change enum to list to check for each values
+// Visibility is enums type so for constraints we need to change enums to list to check for each values
+// topic.canViewBy()

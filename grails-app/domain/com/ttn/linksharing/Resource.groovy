@@ -12,6 +12,7 @@ abstract class Resource {
     Date dateCreated
     Date lastUpdated
 
+    abstract getType();
 
     static constraints = {
         dateCreated(date: Date, nullable: true)
@@ -77,6 +78,14 @@ abstract class Resource {
         }
         return topPost
     }
+
+    def canViewBy(){
+        if(this.topic.canViewedBy(session.user)){
+            log.info("resource can be viewed")
+        }
+
+    }
+
 
     static namedQueries={
         search{ ResourceSearchCO rco ->

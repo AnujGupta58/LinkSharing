@@ -9,4 +9,9 @@ class DocumentResource extends Resource {
     }
     static constraints = {
     }
+
+    @Override
+    def getType() {
+        return false
+    }
 }
