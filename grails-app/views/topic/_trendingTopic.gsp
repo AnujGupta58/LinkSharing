@@ -13,6 +13,7 @@
     </div>
 
 </div>--}%
+<g:if test="${session.user}">
 <div class="panel panel-default">
     <div class="panel-heading">
         Trending Topics
@@ -101,3 +102,4 @@
         </div>--}%
     </div>
 </div>
+    </g:if>

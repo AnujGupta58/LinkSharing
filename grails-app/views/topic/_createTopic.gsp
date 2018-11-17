@@ -5,8 +5,11 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js" integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"
+            integrity="sha384-SlE991lGASHoBfWbelyBPLsUlwY1GwNDJo3jSJO04KZ33K2bwfV9YBauFfnzvynJ"
+            crossorigin="anonymous"></script>
 </head>
+
 <body>
 
 <span class="col-lg-1">
@@ -24,28 +27,41 @@
             </div>
 
             <div class="modal-body">
-                <form class="form-horizontal" action="#">
+                <g:form class="form-horizontal" controller="topic" action="save">
+                %{--<form class="form-horizontal" action="#">--}%
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="name1">Name*:</label>
+                        <label class="control-label col-sm-2">Name*:</label>
 
                         <div class="col-sm-10">
-                            <input type="text" class="form-control" id="name1" name="name1"
+                            <input type="text" class="form-control" name="topicName"
                                    style="    margin-left: 95px;padding-right: -50px;margin-right: 100px;">
                         </div>
                     </div>
 
-                    <div class="dropdown">
-                        <label class="control-label col-sm-2" for="visibility">Visibility*:</label>
-                        <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
-                                id="visibility"
-                                style="padding-right: 10px;padding-left: 300px;margin-left: 100px;">visibility
-                            <span class="caret"></span>
-                        </button>
-                        <ul class="dropdown-menu">
-                            <li><a href="#">private</a></li>
-                            <li><a href="#">public</a></li>
-                        </ul>
+                    <div class="col-lg-12">
+                        <label class="control-label col-sm-2">Visibility*:</label>
+                        <g:select name="visibility" value="visibility" from="${com.ttn.linksharing.enumeration.Visibility.values()}"/>
+                        %{--<select class="col-lg-12" id="Visibility">--}%
+                        %{--<option value="${enumeration.Visibility.PRIVATE}">PRIVATE</option>--}%
+                        %{--<option value="${enumeration.Visibility.PUBLIC}">PUBLIC</option>--}%
+                        %{--</select>--}%
                     </div>
+                %{--        <div class="dropdown">
+                            <label class="control-label col-sm-2" for="visibility">Visibility*:</label>
+                            <button class="btn btn-default dropdown-toggle" type="button" data-toggle="dropdown"
+                                    id="visibility"
+                                    style="padding-right: 10px;padding-left: 300px;margin-left: 100px;">visibility
+                                <span class="caret"></span>
+                            </button>
+                            <ul class="dropdown-menu">
+                                <li></li>
+                                <li></li>
+                                <select class="form-control " name="topicVisibility">
+                                    <option value="${com.ttn.linksharing.enumeration.Visibility.PRIVATE}">Private</option>
+                                    <option value="${com.ttn.linksharing.enumeration.Visibility.PUBLIC}">Private</option>
+                                </select>
+                            </ul>
+                        </div>--}%
                     <br>
 
                     <div class="form-group">
@@ -55,7 +71,8 @@
                             <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                         </div>
                     </div>
-                </form>
+                %{--</form>--}%
+                </g:form>
             </div>
         </div>
     </div>

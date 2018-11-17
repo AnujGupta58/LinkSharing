@@ -1,7 +1,8 @@
 package com.ttn.linksharing
 
 import com.ttn.linksharing.VO.TopicVO
-import com.ttn.linksharing.enums.Visibility
+import com.ttn.linksharing.enumeration.Seriousness
+import com.ttn.linksharing.enumeration.Visibility
 
 class Topic {
     static String convertVisibilty(String visibility) {
@@ -27,6 +28,10 @@ class Topic {
     }
     static mapping = {
         sort name: 'asc'
+        subscriptions cascade: 'all-delete-orphan'
+        resources cascade: 'all-delete-orphan'
+        readingItems cascade: 'all-delete-orphan'
+
     }
 
     static hasMany = [subscriptions: Subscription, resources: Resource]
@@ -34,7 +39,7 @@ class Topic {
     void afterInsert() {
 
         withNewSession {
-            Subscription subscription = new Subscription(topic: this, seriousness: Subscription.Seriousness.VERY_SERIOUS, user: this.createdBy)
+            Subscription subscription = new Subscription(topic: this, seriousness: Seriousness.VERY_SERIOUS, user: this.createdBy)
             subscription.save(failOnError: true)
 
         }
@@ -78,5 +83,5 @@ class Topic {
     }
 }
 
-// Visibility is enums type so for constraints we need to change enums to list to check for each values
+// Visibility is enumeration type so for constraints we need to change enumeration to list to check for each values
 // topic.canViewBy()

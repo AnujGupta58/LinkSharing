@@ -1,5 +1,7 @@
 package com.ttn.linksharing
 
+import grails.transaction.Transactional
+
 
 class SubscriptionController {
 
@@ -8,7 +10,7 @@ class SubscriptionController {
         render "Subscription index"
     }
 
-
+    @Transactional
     def save(Long id,String seriousness){
         Topic topic=Topic.get(id)
         User user=session.user
@@ -25,10 +27,12 @@ class SubscriptionController {
         }
     }
 
+    @Transactional
     def update(Long id){
         subscriptionService.update(id)
         render "Success ${subscription.seriousness}"
     }
+
 
     def delete(Long id){
         subscriptionService.delete(id)

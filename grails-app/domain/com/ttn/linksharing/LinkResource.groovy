@@ -15,4 +15,9 @@ class LinkResource extends Resource{
     def getType() {
         return true
     }
+
+    @Override
+    def deleteFile() {
+        return null
+    }
 }

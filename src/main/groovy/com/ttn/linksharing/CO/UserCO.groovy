@@ -7,10 +7,14 @@ import groovy.beans.Bindable
 class UserCO {
     String email
     String password
-    String confirmPassword
+    String name
     String firstName
     String lastName
     byte[] photo
     boolean admin
     boolean isActive
+    Integer topicCount
+    Integer resourceCount
+    Integer subscriptionCount
+
 }

@@ -10,7 +10,6 @@
 <body>
 <div class="col-md-4">
     <g:render template="info"/>
-
 </div>
 <div class="col-md-8">
  %{--   <g:render template="/topic/showTopic"/>--}%

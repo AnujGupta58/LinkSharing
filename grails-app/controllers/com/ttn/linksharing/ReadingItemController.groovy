@@ -1,5 +1,8 @@
 package com.ttn.linksharing
 
+import grails.transaction.Transactional
+
+
 class ReadingItemController {
 
     def index() {
@@ -16,6 +19,7 @@ class ReadingItemController {
         }
     }
 
+    @Transactional
     def save(Long id) {
         User user = session.user
        // log.info("Current Logged In User : ${user?.firstName}")

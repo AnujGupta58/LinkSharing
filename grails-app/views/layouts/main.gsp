@@ -41,6 +41,8 @@
 
             <g:render template="/user/sendInvitation"/>
 
+            %{--<g:render template="/user/shareLink"/>--}%
+
             <g:render template="/resource/linkResource"/>
 
             <g:render template="/resource/documentResource"/>
@@ -64,7 +66,7 @@
                     ${session.user.getFullName()}
                     <span class="caret"></span></a>
                 <ul class="dropdown-menu">
-                    <li><g:link controller="user" action="editProfile">Profile</g:link></li>
+                    <li><g:link controller="user" action="profile">Profile</g:link></li>
                     <li><g:link controller="topic" action="show">topic</g:link></li>
                     <li><g:link controller="resource" action="show">Resources</g:link></li>
                     <li><g:link controller="login" action="logout">post</g:link></li>
@@ -82,6 +84,8 @@
 </header>
 </div>
 
+<div>${flash.message}</div>
+<div>${flash.error}</div>
 <div class="body">
 
     <g:layoutBody/>

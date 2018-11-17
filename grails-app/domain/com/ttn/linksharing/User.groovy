@@ -44,6 +44,7 @@ class User {
     static mapping = {
         photo(sqlType: 'longblob')
         sort 'id': 'desc'
+//        topics cascade: 'all-delete-orphan'
         // [sort: 'id' , order: 'desc']
     }
 
@@ -69,6 +70,11 @@ class User {
             }
         }
         return unReaditem
+    }
+
+    List getUserTopics(){
+        List topic=Topic.findAllByCreatedBy(this)
+        return topic
     }
 
     List<Topic> getSubscribedTopic(){

@@ -30,8 +30,8 @@ class LinkSharingtaglibTagLib {
         out<< render(template: '/topic/trendingTopic')
     }
 
-    def userImage ={
-
+    def userImage ={ attrs,body->
+        out >> "<img src = '/home/anuj/LinkSharing/grails-app/assets/images/Avatar.png' width='40', height='40'/>"
     }
 
     def canDeleteResource={ attrs,body ->
@@ -73,7 +73,7 @@ class LinkSharingtaglibTagLib {
     }
 
     def topicCount={ attrs,body->
-        User user = User.get(attr.user)
+        User user = User.load(attrs.userID)
         if (user){
             out << Topic.countByCreatedBy(user)
         }

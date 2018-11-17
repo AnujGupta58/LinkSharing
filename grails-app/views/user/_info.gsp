@@ -7,7 +7,8 @@
 </head>
 
 <body>
-%{--<div class="col-md-6">--}%
+<div class="col-lg-12">
+<g:if test="${session.user}">
     <div class="panel panel-default">
         <div class="panel-body">
             <div class="col-lg-3">
@@ -25,16 +26,17 @@
 
                 <div class="col-lg-4" style="    padding-left: 0px;">
                     <span class="text-muted">Subscriptions</span>
-                    <span class="text-primary">50</span>
+                    <ls:subscriptionCount userId="${session.user.id}"/>
                 </div>
 
                 <div class="col-lg-3">
                     <span class="text-muted">Topics</span>
-                    <span class="text-primary">50</span>
+                    <ls:topicCount userID="${session.user.id}"/>
                 </div>
             </div>
         </div>
     </div>
-%{--</div>--}%
+</g:if>
+</div>
 </body>
 </html>

@@ -1,9 +1,13 @@
 package com.ttn.linksharing
 
+import grails.transaction.Transactional
+
+
 class ResourceRatingController {
 
     def index() { }
 
+    @Transactional
     def save(){
         Resource resource=Resource.findByCreatedBy(session.user)
         ResourceRating resourceRating = new ResourceRating(resource: resource,user: session.user, score: params.score)

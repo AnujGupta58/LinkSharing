@@ -1,6 +1,6 @@
 package com.ttn.linksharing
 
-import com.ttn.linksharing.enums.Seriousness
+import com.ttn.linksharing.enumeration.Seriousness
 
 class Subscription {
     static Seriousness convertSeriousness(String seriousness) {

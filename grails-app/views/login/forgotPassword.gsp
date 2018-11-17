@@ -17,7 +17,7 @@
             <g:form controller="login" action="forgotPassword">
                 <div class="form-group col-lg-10">
                     <label>Enter your Username</label>
-                    <input class="form-control" type="text" name="username" placeholder="Enter your Username">
+                    <input class="form-control" type="text" name="email" placeholder="Enter your Username">
                 </div>
 
                 <div class="form-group col-lg-10">
@@ -27,7 +27,7 @@
 
                 <div class="form-group col-lg-10">
                     <label>Confirm new Password</label>
-                    <input class="form-control" type="password" name="password" placeholder="Confirm new Password">
+                    <input class="form-control" type="password" name="confirmPassword" placeholder="Confirm new Password">
                 </div>
 
                 <div class="form-group col-lg-10">

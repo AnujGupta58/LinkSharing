@@ -14,12 +14,16 @@ abstract class Resource {
 
     abstract getType();
 
+    abstract deleteFile();
+
     static constraints = {
         dateCreated(date: Date, nullable: true)
         lastUpdated(date: Date, nullable: true)
     }
     static mapping = {
         description(sqlType: 'text')
+        readingItems cascade: 'all-delete-orphan'
+//        ratings cascade: 'all-delete-orphan'
     }
     static hasMany = [ratings: ResourceRating, readingItems: ReadingItem]
 

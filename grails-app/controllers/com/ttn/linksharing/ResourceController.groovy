@@ -1,8 +1,8 @@
 package com.ttn.linksharing
 
 import com.ttn.linksharing.CO.ResourceSearchCO
-import com.ttn.linksharing.CO.SearchCO
-import com.ttn.linksharing.VO.RatingInfoVO
+import grails.transaction.Transactional
+
 
 
 class ResourceController {
@@ -11,8 +11,8 @@ class ResourceController {
         render "index"
     }
 
+    @Transactional
     def create() {
-
         User user = session.user
         if (session.user) {
             Topic topic = Topic.findByCreatedBy(user)
@@ -25,10 +25,22 @@ class ResourceController {
     def delete(Long id) {
         Resource resource = Resource.get(id)
         try {
-            if (resource.id == id) {
-                resource.delete()
-                //render "Resource Deleted"
-                redirect(controller:'user',action:'index')
+            if (resource) {
+                if(resource.delete()){
+                    resource.deleteFile()
+                    //render "Resource Deleted"
+                    flash.message="Resource Deleted"
+                    log.info("Resource Deleted")
+                    redirect(controller:'user',action:'index')
+                }
+                else {
+                    flash.error="Resource cannot be Deleted"
+                    log.info("Resource cannot be Deleted")
+                }
+            }
+            else {
+                flash.message="Resource not found"
+                log.info("Resource not found")
             }
         } catch (Exception e) {
             e.printStackTrace()
@@ -36,11 +48,11 @@ class ResourceController {
     }
 
     def show() {
-        /*List votes=Resource.totalVotes()
+        List votes=Resource.totalVotes()
         Integer score=Resource.totalScore()
         Integer avgscore=Resource.AvgScore()
         List counter=Topic.getTrendingTopics()
-        render "TOTAL SCORE ${score} and VOTES ${votes} and AVG_SCORE ${avgscore}   and TRENDING TOPICS ${counter}"*/
+      //  render "TOTAL SCORE ${score} and VOTES ${votes} and AVG_SCORE ${avgscore}   and TRENDING TOPICS ${counter}"
 
         /*  RatingInfoVO ratingInfo=Resource.getRatingInfo()
           render "Info  ${ratingInfo}"*/
