@@ -12,9 +12,9 @@ class SubscriptionService {
         Subscription.get(id)
     }
 
-    def save(Long id,String seriousness){
+   /* def save(Long id,String seriousness){
 
-    }
+    }*/
 
     def update(Long id){
         def subscription = Subscription.get(id)

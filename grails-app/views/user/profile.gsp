@@ -16,157 +16,172 @@
                 <div class="col-lg-12">
                     <div class="row">
                         <div class="col-lg-3">
-                            <asset:image src="Avatar.png" class="img-responsive"/>
-                        </div>
+<asset:image src="Avatar.png" class="img-responsive"/>
+</div>
 
-                        <div class="col-lg-9">
-                            ${userInfo.name}
-                            <span class="text-muted col-lg-12">@${userInfo.email}</span>
+<div class="col-lg-9">
+    ${userInfo.name}
+    <span class="text-muted col-lg-12">@${userInfo.email}</span>
 
-                            <div class="row">
-                                <h6 class="text-muted col-sm-6">Subscriptions
-                                    <p class="text-primary">${userInfo.subscriptionCount}</p>
-                                </h6>
-                                <h6 class="text-muted col-sm-6">Topics
-                                    <p class="text-primary">${userInfo.topicCount}</p>
-                                </h6>
-                            </div>
-                        </div>
+    <div class="row">
+        <h6 class="text-muted col-sm-6">Subscriptions
+            <p class="text-primary">${userInfo.subscriptionCount}</p>
+        </h6>
+        <h6 class="text-muted col-sm-6">Topics
+            <p class="text-primary">${userInfo.topicCount}</p>
+        </h6>
+    </div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+<div class="col-lg-12">
+<div class="panel panel-primary">
+<div class="panel-heading">
+Topics
+</div>
+
+<div class="panel-body">
+<g:each in="${(userTopicList)}" var="topic">
+    <div class="row">
+        <div class="col-lg-2">
+    <asset:image src="Avatar.png" class="img-responsive"/>
+    </div>
+
+    <div class="col-lg-10">
+    <g:form controller="topic" action="editTopic">
+        <div class="col-lg-6" style="padding-left: 5px">
+            <input type="text" class="form-control" placeholder="Topic Name" name="name">
+            <input type="hidden" class="form-control" name="id" value="${topic.id}"/>
+        </div>
+
+        <div class="col-lg-3">
+            <button type="submit">save</button>
+        </div>
+
+        <div class="col-lg-3">
+            <button type="reset">cancel</button>
+        </div>
+
+        <div class="text-primary col-lg-12">
+            <a class="hyperlink" href="#">${topic.name}</a>
+        </div>
+
+        <div class="col-lg-5" style="padding-left: 0px">
+            <span class="text-muted">@${topic.email}</span>
+            %{--<a href="#" class="hyperlink">Unsubscribe</a>--}%
+        </div>
+
+        <div class="col-lg-3">
+            <span class="text-muted">Subscriptions</span>
+            <span class="text-primary">${topic.subscriptionsCount}</span>
+        </div>
+
+        <div class="col-lg-2">
+            <span class="text-muted">Resources</span>
+            <span class="text-primary">${topic.resourcesCount}</span>
+        </div>
+
+
+        <div class="col-lg-12">
+            <div class="col-lg-4">
+                <span class="text-muted">Visibilty</span>
+    %{--<span class="text-primary">${topic.visibility}</span>--}%
+    %{--<g:form controller="topic" action="editTopic">--}%
+            <g:select name="visibility" value="${topic}"
+                      from="${com.ttn.linksharing.enumeration.Visibility.values()}"/>
+
+            </div>
+
+        %{--<span class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button"
+                    data-toggle="dropdown">Seriousness
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Very Serious</a></li>
+                <li><a href="#">Serious</a></li>
+                <li><a href="#">Less Serious</a></li>
+            </ul>
+        </span>--}%
+        %{--<span class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" type="button"
+                    data-toggle="dropdown">Scope
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                <li><a href="#">Private</a></li>
+                <li><a href="#">Public</a></li>
+            </ul>
+        </span>--}%
+            <div class="col-lg-4">
+                <g:render template="/user/sendInvitation"/>
+                <g:render template="/resource/documentResource"/>
+                <g:form controller="topic" action="delete">
+                    <div class="form-group form-inline">
+                        <input type="hidden" name="id" value="${topic.id}"/>
+                        <button type="submit" class="btn btn-primary">Delete</button>
                     </div>
-                </div>
+                </g:form>
             </div>
+          %{--  <div class="col-lg-4">
+                <span class="text-muted">Visibilty</span>
+                <g:select name="visibility" value="${topic.visibility}"
+                          from="${com.ttn.linksharing.enumeration.Visibility.values()}"/>
+            </div>--}%
+            </div>
+        </g:form>
+
         </div>
 
-        <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Topics
-                </div>
-
-                <div class="panel-body">
-                    <g:each in="${(userTopicList)}" var="topic">
-                        <div class="row">
-                            <div class="col-lg-2">
-                                <asset:image src="Avatar.png" class="img-responsive"/>
-                            </div>
-
-                            <div class="col-lg-10">
-                                <g:form controller="topic" action="editTopic">
-                                    <div class="col-lg-6" style="padding-left: 5px">
-                                        <input type="text" class="form-control" placeholder="Topic Name" name="name">
-                                        <input type="hidden" class="form-control" name="id" value="${topic.id}"/>
-                                    </div>
-
-                                    <div class="col-lg-3">
-                                        <button type="submit">save</button>
-                                    </div>
-                                </g:form>
-                                <div class="col-lg-3">
-                                    <button type="reset">cancel</button>
-                                </div>
-
-                                <div class="text-primary col-lg-12">
-                                    <a class="hyperlink" href="#">${topic.name}</a>
-                                </div>
-
-                                <div class="col-lg-5" style="padding-left: 0px">
-                                    <span class="text-muted">@${topic.email}</span>
-                                    %{--<a href="#" class="hyperlink">Unsubscribe</a>--}%
-                                </div>
-
-                                <div class="col-lg-3">
-                                    <span class="text-muted">Subscriptions</span>
-                                    <span class="text-primary">${topic.subscriptionsCount}</span>
-                                </div>
-
-                                <div class="col-lg-2">
-                                    <span class="text-muted">Resources</span>
-                                    <span class="text-primary">${topic.resourcesCount}</span>
-                                </div>
-                            </div>
-
-                            <div class="col-lg-4 col-sm-offset-1">
-                                <div class="col-lg-2">
-                                    <span class="text-muted">Visibilty</span>
-                                    <span class="text-primary">${topic.visibility}</span>
-                                    %{--   <g:form controller="topic" action="editTopic">
-                                           <g:select name="visibility" value="${topic.visibility}"
-                                                     from="${com.ttn.linksharing.enumeration.Visibility.values()}"/>
-                                       </g:form>--}%
-                                </div>
-                                %{--<span class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button"
-                                            data-toggle="dropdown">Seriousness
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Very Serious</a></li>
-                                        <li><a href="#">Serious</a></li>
-                                        <li><a href="#">Less Serious</a></li>
-                                    </ul>
-                                </span>--}%
-                                %{--<span class="dropdown">
-                                    <button class="btn btn-primary dropdown-toggle" type="button"
-                                            data-toggle="dropdown">Scope
-                                        <span class="caret"></span>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="#">Private</a></li>
-                                        <li><a href="#">Public</a></li>
-                                    </ul>
-                                </span>--}%
-                            </div>
-
-                            <div class="col-lg-4">
-                                <g:render template="/user/sendInvitation"/>
-                                <g:render template="/resource/documentResource"/>
-                                <g:form controller="topic" action="delete">
-                                    <div class="form-group col-sm-2">
-                                        <input type="hidden" name="id" value="${topic.id}"/>
-                                        <button type="submit" class="btn btn-primary">Delete</button>
-                                    </div>
-                                </g:form>
-                            </div>
-                        </div>
-                        <hr>
-                    </g:each>
-                </div>
-            </div>
         </div>
+        <hr>
+    </g:each>
+    </div>
+</div>
+</div>
 
-        <div class="col-lg-12">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Resource/Post
-                </div>
+    <div class="col-lg-12">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                Resource/Post
+            </div>
 
-                <div class="panel-body">
-                    <div class="col-lg-12">
-                        <g:each in="${(userResourceList)}" var="resource">
-                            <div class="col-lg-9">
-                                <div class="col-lg-6">
-                                    <asset:image src="Avatar.png" class="img-responsive" height="40px" width="40px"/>
-                                </div>
-
-                                <div class="col-lg-3">
-                                    ${resource.topicName}
-                                </div>
+            <div class="panel-body">
+                <div class="col-lg-12">
+                    <g:each in="${(userResourceList)}" var="resource">
+                        <div class="col-lg-9">
+                            <div class="col-lg-6">
+                                <asset:image src="Avatar.png" class="img-responsive" height="40px" width="40px"/>
                             </div>
 
                             <div class="col-lg-3">
-                                ${resource.createdBy}
+                                <a href="${createLink(controller: 'topic', action: 'show', id: "${resource.topicId}")}">${resource.topicName}</a>
                             </div>
-                            <textarea class="col-lg-12 pull-left">
-                                ${resource.description}
-                            </textarea>
-                            <hr>
-                        </g:each>
+                        </div>
 
-                    </div>
+                        <div class="col-lg-3">
+                            ${resource.createdBy}
+                        </div>
+
+                        <div class="col-lg-12 pull-right">
+                            <g:form controller="resource" action="updateDescription" id="${resource.resourceId}">
+                                <textarea class="col-lg-offset-2" name="description">
+                                    ${resource.description}
+                                </textarea>
+                                <button type="submit" class="btn btn-default">Save</button>
+                            </g:form>
+                        </div>
+                        <hr>
+                    </g:each>
+
                 </div>
-
             </div>
+
         </div>
+    </div>
     </div>
 
     <div class="col-lg-6">
@@ -234,7 +249,7 @@
             </div>
         </div>
     </div>
-</div>
+    </div>
 
-</body>
-</html>
+    </body>
+    </html>

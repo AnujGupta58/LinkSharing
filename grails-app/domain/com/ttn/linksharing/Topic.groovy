@@ -30,7 +30,6 @@ class Topic {
         sort name: 'asc'
         subscriptions cascade: 'all-delete-orphan'
         resources cascade: 'all-delete-orphan'
-        readingItems cascade: 'all-delete-orphan'
 
     }
 
@@ -78,6 +77,17 @@ class Topic {
         }
         else{
             log.info("cannot be viewed")
+            return false
+        }
+    }
+
+    def isSubscribed(){
+//        Topic topic = Topic.findById()
+        Subscription subscription = Subscription.findByTopicAndUser(this,session.user)
+        if(subscription){
+            return true
+        }
+        else{
             return false
         }
     }

@@ -4,7 +4,8 @@ import com.ttn.linksharing.Topic
 import com.ttn.linksharing.User
 
 class ResourceCO {
-    Long id
+    Long resourceId
+    Long topicId
     String topicName
     String description
     String createdBy

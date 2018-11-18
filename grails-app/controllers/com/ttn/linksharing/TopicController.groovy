@@ -1,8 +1,8 @@
 package com.ttn.linksharing
 
-import com.ttn.linksharing.CO.TopicCO
-import grails.transaction.Transactional
-
+import com.ttn.linksharing.VO.ResourceVO
+import com.ttn.linksharing.VO.UserVO
+import com.ttn.linksharing.VO.TopicVO
 
 //@Transactional
 class TopicController {
@@ -13,11 +13,22 @@ class TopicController {
     }
 
     def show(Long id) {
-        def info=topicService.getInfo(id)
-        if(info){
-            render(view: 'showTopic',model: [topicVO:info])
+        Topic topic = Topic.findById(id)
+        TopicVO topicVO =new TopicVO(id: id, name: topic.name,createdBy: topic.createdBy,visibility: topic.visibility,subscriptionsCount: topic.subscriptions.size(),resourcesCount: topic.resources.size())
+
+        List<Subscription> subscribedUsers= Subscription.findAllByTopic(topic)
+        List<UserVO> subscribedUsersList=[]
+        subscribedUsers.each {
+            subscribedUsersList.add(new UserVO(name: it.user.firstName, email: it.user.email,subscriptionCount: it.user.subscriptionCount,resourceCount: it.user.resources.size()))
         }
 
+        List<Resource> resourceList = Resource.findAllByTopic(topic)
+        List<ResourceVO> topicResource=[]
+        resourceList.each {
+            topicResource.add(new ResourceVO(resourceId: it.id, topicName: it.topic.name, description: it.description, createdByName: it.createdBy.firstName,createdByEmail: it.createdBy.email, isLink: it.getType()))
+        }
+
+        render(view: 'showTopic',model: [topicVO:topicVO,subscribedUsersList:subscribedUsersList,topicResource:topicResource])
     }
 
     def delete(){
@@ -30,11 +41,13 @@ class TopicController {
             }
             else{
                 topic.errors.allErrors.collect{message(code: it)}.join(",")
+                flash.error="Cannot delete topic"
                 log.info("Cannot delete topic")
-                render("Cannot delete topic")
+//                render("Cannot delete topic")
             }
         }
         else{
+            flash.error="Topic not found"
             log.info("Topic not found")
             render("Topic not found")
         }
@@ -79,7 +92,7 @@ class TopicController {
         Topic topic =Topic.get(params.id)
         if(topic){
             topic.name=params.name
-//            topic.visibility=params.visibility
+            topic.visibility=params.visibility
             if(topic.save(flush:true)){
                 flash.message="Topic name and visibility updated succcessfully"
                 log.info("Topic name and visibility updated succcessfully")

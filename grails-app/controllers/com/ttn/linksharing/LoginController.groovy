@@ -1,6 +1,6 @@
 package com.ttn.linksharing
 
-import com.ttn.linksharing.CO.UserCO
+
 import grails.transaction.Transactional
 
 
@@ -23,7 +23,7 @@ class LoginController {
     def register() {
        User user = new User([firstName: params.firstName, lastName: params.lastName, email: params.email, password: params.password, confirmPassword: params.confirmPassword, photo: params.photo])
 //        user.properties=params
-      //  UserCO user = new UserCO( firstName: params.firstName, lastName: params.lastName, email: params.email, password: params.password, confirmPassword: params.confirmPassword, photo: params.photo )
+      //  UserVO user = new UserVO( firstName: params.firstName, lastName: params.lastName, email: params.email, password: params.password, confirmPassword: params.confirmPassword, photo: params.photo )
       //  user.isActive=true
         log.info("${params}")
         if (user.save()) {
@@ -40,18 +40,18 @@ class LoginController {
     def loginhandler(String username, String password) {
         User user = User.findByEmailAndPassword(username, password)
         if (user) {
-            user.isActive=true
+            //user.isActive=true
             if (user.isActive) {
                 session["user"] = user
                 flash.message="User logged in successfully"
                 redirect(controller: 'user', action: 'index')
                 return false
             } else {
-                flash.message = "Your Account is not Active"
+                flash.error = "Your Account is not Active"
                 render(view: 'index')
             }
         } else {
-            flash.message = "User not Found"
+            flash.error = "Username and Passowrd is incorrect "
             render(view: 'index')
             // (flash.error = "User..... not..... found")
         }

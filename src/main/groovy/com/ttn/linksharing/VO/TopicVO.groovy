@@ -12,7 +12,9 @@ class   TopicVO implements Validateable {
     String name
     String email
     Visibility visibility
+    Seriousness seriousness
     Integer subscriptionsCount
     Integer resourcesCount
+    boolean isSubscribed
     User createdBy
 }

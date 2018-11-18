@@ -12,16 +12,16 @@
 <body>
 <div class="container">
     <div class="col-lg-12">
-
         <table class="table table-bordered">
             <thead>
             <tr>
                 <th>Name</th>
                 <th>Email</th>
-                <th>isActive</th>
                 <th>topicCount</th>
                 <th>resourceCount</th>
                 <th>subscriptionCount</th>
+                <th>Active</th>
+                <th>Manage</th>
             </tr>
             </thead>
             <tbody>
@@ -29,10 +29,18 @@
                 <tr>
                     <td>${users.name}</td>
                     <td>${users.email}</td>
-                    <td>${users.isActive}</td>
                     <td>${users.topicCount}</td>
                     <td>${users.resourceCount}</td>
                     <td>${users.subscriptionCount}</td>
+                    <td>${users.isActive}</td>
+                    <td><a href="${createLink(controller: 'user', action: 'changeActive', id: "${users.id}")}">
+                        <g:if test="${users.isActive}">
+                            Deactivate
+                        </g:if>
+                        <g:else>
+                            Activate
+                        </g:else>
+                    </a></td>
                 </tr>
             %{--       <tr>
                        <td>Mary</td>

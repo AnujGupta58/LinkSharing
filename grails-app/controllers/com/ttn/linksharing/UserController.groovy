@@ -1,7 +1,7 @@
 package com.ttn.linksharing
 
 import com.ttn.linksharing.CO.ResourceCO
-import com.ttn.linksharing.CO.UserCO
+import com.ttn.linksharing.VO.UserVO
 import com.ttn.linksharing.VO.TopicVO
 import grails.transaction.Transactional
 
@@ -79,31 +79,33 @@ class UserController {
         user.password=params.password
         user.confirmPassword=params.confirmpassword
         if(user.save(flush:true)){
+            flash.message="Password updated Successfully"
             log.info("updated successfully")
-            return true
+            redirect(controller: 'user', action: 'profile')
         }
         else{
+            flash.error="Password cannot be updated"
             log.info("cannot update")
             user.errors.allErrors.collect {message(code: it)}.join(",")
-            return false
+            redirect(controller: 'user', action: 'profile')
         }
 
     }
 
     def profile(){
         User user=User.findByEmail(session.user.email)
-        UserCO userInfo= new UserCO(name: user.getFullName(),email: user.email,topicCount: user.topics.size(),resourceCount: user.resources.size(),subscriptionCount: user.subscriptions.size())
+        UserVO userInfo= new UserVO(name: user.getFullName(),email: user.email,topicCount: user.topics.size(),resourceCount: user.resources.size(),subscriptionCount: user.subscriptions.size())
 
         List topicList=Topic.findAllByCreatedBy(user)
         List<TopicVO> userTopicList=[]
         topicList.each {
-            userTopicList.add(new TopicVO(id: it.id, name: it.name,email: it.createdBy.email, createdBy: it.createdBy, visibility: it.visibility, resourcesCount: it.resources.size(),subscriptionsCount: it.subscriptions.size()))
+            userTopicList.add(new TopicVO(id: it.id, name: it.name,email: it.createdBy.email, createdBy: it.createdBy, visibility: it.visibility,resourcesCount: it.resources.size(),subscriptionsCount: it.subscriptions.size()))
         }
 
         List resourceList=Resource.findAllByCreatedBy(user)
         List<ResourceCO> userResourceList=[]
         resourceList.each {
-            userResourceList.add(new ResourceCO(id: it.id,topicName: it.topic.name,description: it.description,createdBy: it.createdBy.getFullName()))
+            userResourceList.add(new ResourceCO(resourceId: it.id,topicId: it.topic.id, topicName: it.topic.name,description: it.description,createdBy: it.createdBy.getFullName()))
         }
 
         render(view:'/user/profile', model: [userInfo:userInfo,userTopicList:userTopicList,userResourceList:userResourceList])
@@ -113,10 +115,42 @@ class UserController {
 
     def showAllUsers(){
         List<User> users= User.findAllByAdmin(false)
-        List<UserCO> userList=[]
+        List<UserVO> userList=[]
         users.each{
-            userList.add(new UserCO(name: it.getFullName(),email: it.email, isActive: it.isActive,topicCount: it.topics.size(),resourceCount: it.resources.size(),subscriptionCount: it.subscriptions.size()))
+            userList.add(new UserVO(id: it.id, name: it.getFullName(),email: it.email, isActive: it.isActive,topicCount: it.topics.size(),resourceCount: it.resources.size(),subscriptionCount: it.subscriptions.size()))
         }
         render (view: '/user/userList', model: [userList:userList])
+    }
+
+    def changeActive(Long id){
+        User user = User.get(id)
+        if(user.isActive){
+            user.isActive=false
+            if(user.save(flush:true)){
+                flash.message="User is deactivated"
+                log.info("User is deactivated")
+                redirect(controller: 'user' , action: 'showAllUsers')
+                return true
+            }
+            else{
+                flash.error="Error in deactivating"
+                log.info("Error in deactivating")
+                return false
+            }
+        }
+        else {
+            user.isActive=true
+            if(user.save(flush:true)){
+                flash.message="User is Activated"
+                log.info("User is Activated")
+                redirect(controller: 'user' , action: 'showAllUsers')
+                return true
+            }
+            else{
+                flash.error="Error in Activating"
+                log.info("Error in Activating")
+                return false
+            }
+        }
     }
 }

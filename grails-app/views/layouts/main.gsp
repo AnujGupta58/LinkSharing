@@ -67,9 +67,9 @@
                     <span class="caret"></span></a>
                 <ul class="dropdown-menu">
                     <li><g:link controller="user" action="profile">Profile</g:link></li>
-                    <li><g:link controller="topic" action="show">topic</g:link></li>
-                    <li><g:link controller="resource" action="show">Resources</g:link></li>
-                    <li><g:link controller="login" action="logout">post</g:link></li>
+                    %{--<li><g:link controller="topic" action="show">topic</g:link></li>--}%
+                    %{--<li><g:link controller="resource" action="show">Resources</g:link></li>--}%
+                    %{--<li><g:link controller="login" action="logout">post</g:link></li>--}%
                     <g:if test="${session.user.admin}">
                         <li><g:link controller="user" action="showAllUsers">Users</g:link></li>
                     %{--<li><g:link controller="user" action="showTopics">Topic</g:link></li>--}%
@@ -84,8 +84,8 @@
 </header>
 </div>
 
-<div>${flash.message}</div>
-<div>${flash.error}</div>
+<div style="color: green">${flash.message}</div>
+<div style="color: red">${flash.error}</div>
 <div class="body">
 
     <g:layoutBody/>

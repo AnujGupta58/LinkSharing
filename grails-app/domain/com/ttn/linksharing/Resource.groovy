@@ -83,6 +83,16 @@ abstract class Resource {
         return topPost
     }
 
+    static List getrecentShare(){
+        List recentShare= Resource.createCriteria().list {
+            projections{
+                order("dateCreated", "desc")
+            }
+            maxResults(3)
+        }
+        return recentShare
+    }
+
     def canViewBy(){
         if(this.topic.canViewedBy(session.user)){
             log.info("resource can be viewed")

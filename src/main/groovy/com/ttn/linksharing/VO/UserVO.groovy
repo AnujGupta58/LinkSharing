@@ -1,10 +1,11 @@
-package com.ttn.linksharing.CO
+package com.ttn.linksharing.VO
 
 import groovy.beans.Bindable
 
 
 @Bindable
-class UserCO {
+class UserVO {
+    Long id
     String email
     String password
     String name
