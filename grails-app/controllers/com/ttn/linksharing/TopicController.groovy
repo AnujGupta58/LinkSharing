@@ -1,5 +1,6 @@
 package com.ttn.linksharing
 
+import com.ttn.linksharing.DTO.EmailDTO
 import com.ttn.linksharing.VO.ResourceVO
 import com.ttn.linksharing.VO.UserVO
 import com.ttn.linksharing.VO.TopicVO
@@ -96,6 +97,17 @@ class TopicController {
             }
         } else {
             flash.error = "Topic not found"
+        }
+    }
+
+    def inviteAction(EmailDTO emailDTO,Long id){
+        Topic topic = Topic.get(id)
+        if(topic && session.user){
+            sendMail {
+                to "${emailDTO.to}"
+                subject "${emailDTO.subject}"
+                text"${emailDTO.model}"
+            }
         }
     }
 }

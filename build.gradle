@@ -19,6 +19,24 @@ apply plugin:"war"
 apply plugin:"org.grails.grails-web"
 apply plugin:"asset-pipeline"
 apply plugin:"org.grails.grails-gsp"
+//apply plugin: 'codenarc'
+//apply plugin: "net.saliman.cobertura"
+
+
+/*
+cobertura {
+    coverageFormats = ['html', 'xml']
+    coverageExcludes = ['.*com\\.egreement\\.accountapplication\\.enums\\.*.*',
+                        '.*com\\.egreement\\.accountapplication\\.Bootstrap',
+                        '.*com\\.egreement\\.accountapplication\\.Application',
+                        '.*com\\.egreement\\.accountapplication\\.LoggingInterceptor']
+}
+*/
+
+
+/*codenarcMain {
+    configFile = rootProject.file("grails-app/conf/CodeNarcRules.groovy")
+}*/
 
 repositories {
     mavenLocal()
@@ -61,6 +79,9 @@ dependencies {
     testRuntime "net.sourceforge.htmlunit:htmlunit:2.18"
     compile 'mysql:mysql-connector-java:5.1.40'
     compile 'org.grails.plugins:grails-console:2.1.1'
+    compile 'org.grails.plugins:mail:2.0.0'
+    compile 'org.grails.plugins:quartz:2.0.13'
+//    compileClasspath "net.saliman:gradle-cobertura-plugin:2.3.2"
 //    compile "org.grails.plugins:rateable:0.7.1"
 }
 
