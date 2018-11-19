@@ -5,12 +5,9 @@ import com.ttn.linksharing.enumeration.Seriousness
 import com.ttn.linksharing.enumeration.Visibility
 
 class Topic {
-    static String convertVisibilty(String visibility) {
-        valueOf(visibility)
-    }
-    String name;
-    Visibility visibility
+    String name
     User createdBy
+    Visibility visibility
     Date dateCreated
     Date lastUpdated
 
@@ -34,6 +31,7 @@ class Topic {
     }
 
     static hasMany = [subscriptions: Subscription, resources: Resource]
+    //static belongsTo = [createdBy: User]
 
     void afterInsert() {
 
@@ -74,20 +72,18 @@ class Topic {
         if (isPublic(this) || subscription || user.isAdmin()) {
             log.info("Can be viewed by ${user}")
             return true
-        }
-        else{
+        } else {
             log.info("cannot be viewed")
             return false
         }
     }
 
-    def isSubscribed(){
+    def isSubscribed() {
 //        Topic topic = Topic.findById()
-        Subscription subscription = Subscription.findByTopicAndUser(this,session.user)
-        if(subscription){
+        Subscription subscription = Subscription.findByTopicAndUser(this, session.user)
+        if (subscription) {
             return true
-        }
-        else{
+        } else {
             return false
         }
     }

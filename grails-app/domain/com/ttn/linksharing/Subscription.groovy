@@ -28,4 +28,9 @@ class Subscription {
         user lazy: false
 
     }
+    static belongsTo = [topic: Topic, user: User]
+
+    static Boolean isSubscribed(){
+        
+    }
 }

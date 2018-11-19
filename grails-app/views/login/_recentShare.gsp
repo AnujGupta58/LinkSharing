@@ -1,10 +1,10 @@
-<!doctype html>
+%{--<!doctype html>
 <html>
 <head>
     <meta name="layout" content="main">
     <g:form class="LinkSharing" url="controller:'resource',action:'topPost';">
     </g:form>
-</head>
+</head>--}%
 
 <body>
 <div class="col-sm-12"><div class="panel panel-primary">

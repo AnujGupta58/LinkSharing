@@ -92,7 +92,6 @@ Topics
     %{--<g:form controller="topic" action="editTopic">--}%
             <g:select name="visibility" value="${topic}"
                       from="${com.ttn.linksharing.enumeration.Visibility.values()}"/>
-
             </div>
 
         %{--<span class="dropdown">

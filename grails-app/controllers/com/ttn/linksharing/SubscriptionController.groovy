@@ -1,5 +1,8 @@
 package com.ttn.linksharing
 
+import com.ttn.linksharing.VO.SubscriptionVO
+import com.ttn.linksharing.VO.TopicVO
+import com.ttn.linksharing.VO.UserVO
 import grails.transaction.Transactional
 
 
@@ -39,4 +42,15 @@ class SubscriptionController {
         redirect(controller: 'topic' , action: 'show')
 //        render"Subscription Deleted"
     }
+
+    def subscriptionList(){
+        List<Subscription> subscriptionList = Subscription.findAllByUser(session.user)
+        List<SubscriptionVO> subscribedTopics=[]
+        subscriptionList.each {
+            subscribedTopics.add(new SubscriptionVO(createdByName: it.topic.createdBy.firstName,createdByemail: it.topic.createdBy.email))
+        }
+
+        render(view: '_subscriptions', model: [subscribedTopics:subscribedTopics])
+    }
 }
+

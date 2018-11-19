@@ -8,6 +8,7 @@ import com.ttn.linksharing.ResourceRating
 import com.ttn.linksharing.Subscription
 import com.ttn.linksharing.Topic
 import com.ttn.linksharing.User
+import com.ttn.linksharing.enumeration.Visibility
 
 class BootStrap {
 
@@ -59,8 +60,8 @@ class BootStrap {
         if (Topic.count() == 0) {
             users.each { User user ->
                 (1..5).each {
-                    Topic topic = new Topic(name: "Topic${it}", visibility: Topic.Visibility.PUBLIC, createdBy: user)
-                    if (topic.save(failOnError: true, flush: true)) {
+                    Topic topic = new Topic(name: "Topic${it}", visibility: Visibility.PUBLIC, createdBy: user)
+                    if (topic.save(flush: true)) {
                         log.info "Topic ${topic} is successfully added.."
                     } else {
                         log.error "Error in creating topic : ${log.error.allErrors}"

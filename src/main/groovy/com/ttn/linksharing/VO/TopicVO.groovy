@@ -17,4 +17,5 @@ class   TopicVO implements Validateable {
     Integer resourcesCount
     boolean isSubscribed
     User createdBy
+    Integer topicCount
 }

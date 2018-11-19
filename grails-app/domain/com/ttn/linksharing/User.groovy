@@ -19,24 +19,26 @@ class User {
     Date lastUpdated
 
     static constraints = {
-        email(unique: true, blank: false, email: true, nullable: false, bindable:true)
+        email(unique: true, blank: false, email: true, nullable: false, bindable: true)
         // Email should be unique, email type, not null, not blank
-        password(size: 5..10, nullable: false, blank: false, bindable:true,validator: { val, obj ->
+        password(size: 5..10, nullable: false, blank: false, bindable: true, validator: { val, obj ->
             if (obj.confirmPassword) {
-                    return (val==obj.confirmPassword) ? true : ['mismatch.password']
+                return (val == obj.confirmPassword) ? true : ['mismatch.password']
             }
         })
         // Password should be not null, not blank and minimum 5 charactes
-        firstName(nullable: false, bindable:true)
-        lastName(nullable: false, bindable:true)                               //FirstName,LastName shoule not be null and not blank
-        photo(nullable: true, bindable:true)                                   // Photo, Admin and Active field can be null
-        admin(nullable: true, bindable:true)
-     /*   confirmPassword(size: 5..10, bindable: true, nullable: false, blank: false, validator: { val, obj ->
-            if (val != obj.password) {
-                return 'password mismatch'
-            }
-            return true
-        })*/
+        firstName(nullable: false, bindable: true)
+        lastName(nullable: false, bindable: true)
+        //FirstName,LastName shoule not be null and not blank
+        photo(nullable: true, bindable: true)
+        // Photo, Admin and Active field can be null
+        admin(nullable: true, bindable: true)
+        /*   confirmPassword(size: 5..10, bindable: true, nullable: false, blank: false, validator: { val, obj ->
+               if (val != obj.password) {
+                   return 'password mismatch'
+               }
+               return true
+           })*/
         dateCreated(date: Date, nullable: true)
         lastUpdated(date: Date, nullable: true)
     }
@@ -44,7 +46,7 @@ class User {
     static mapping = {
         photo(sqlType: 'longblob')
         sort 'id': 'desc'
-//        topics cascade: 'all-delete-orphan'
+        topics cascade: 'all-delete-orphan'
         // [sort: 'id' , order: 'desc']
     }
 
@@ -57,7 +59,7 @@ class User {
         [firstName, lastName].findAll { it }.join(" ")
     }
 
-    static List getUnReadResource(SearchCO co,User user) {
+    static List getUnReadResource(SearchCO co, User user) {
         List unReaditem = ReadingItem.createCriteria().list(max: 9, offset: 0) {
             projections {
                 eq("isRead", false)
@@ -72,65 +74,70 @@ class User {
         return unReaditem
     }
 
-    List getUserTopics(){
-        List topic=Topic.findAllByCreatedBy(this)
+    List getUserTopics() {
+        List topic = Topic.findAllByCreatedBy(this)
         return topic
     }
 
-    List<Topic> getSubscribedTopic(){
-        List<Topic> subscribedTopic=[]
-        if(this.subscriptions)
-            this.subscriptions.each{
+    List<Topic> getSubscribedTopic() {
+        List<Topic> subscribedTopic = []
+        if (this.subscriptions)
+            this.subscriptions.each {
                 subscribedTopic.add(it.topic)
             }
         return subscribedTopic
     }
 
-    Integer getSubscriptionCount(){
-        if(this.subscriptions){
+    Integer getSubscriptionCount() {
+        if (this.subscriptions) {
             return this.subscriptions.size()
-        }
-        else {
+        } else {
             return 0
         }
     }
 
-    def canDeleteResource(Long id){
-        Resource resource= Resource.get(id)
-        if(resource){
-            if(resource.delete(flush:true)){
+    def canDeleteResource(Long id) {
+        Resource resource = Resource.get(id)
+        if (resource) {
+            if (resource.delete(flush: true)) {
                 log.info("deleted")
                 return true
-            }
-            else{
-                resource.errors.allErrors.collect {message(code:it).join(",")}
+            } else {
+                resource.errors.allErrors.collect { message(code: it).join(",") }
                 log.info("unable to delete")
                 return false
             }
-        }
-        else {
+        } else {
             log.info("no resource found")
             return false
         }
 
     }
 
-    def isSubscribed(Long id){
-        Topic topic =Topic.findById(id)
-        Subscription subscription= Subscription.findByTopic(topic)
-        if(subscription){
+    def isSubscribed(Long id) {
+        Topic topic = Topic.findById(id)
+        Subscription subscription = Subscription.findByTopic(topic)
+        if (subscription) {
             log.info("Subscription found")
             return true
-        }
-        else{
+        } else {
             log.info("Subscription not found")
         }
-     /*   List<Subscription> subscription= Subscription.createCriteria().list {
-            projections{
+        /*   List<Subscription> subscription= Subscription.createCriteria().list {
+               projections{
 
-            }
+               }
 
-        }*/
+           }*/
+
+    }
+
+    List subscribedUser(){
+        List<Subscription> subscription = Subscription.findAllByUser(this)
+        List subscribedtopics=[]
+        subscription.each {
+
+        }
 
     }
 

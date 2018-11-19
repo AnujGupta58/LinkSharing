@@ -23,10 +23,10 @@ abstract class Resource {
     static mapping = {
         description(sqlType: 'text')
         readingItems cascade: 'all-delete-orphan'
-//        ratings cascade: 'all-delete-orphan'
+        ratings cascade: 'all-delete-orphan'
     }
     static hasMany = [ratings: ResourceRating, readingItems: ReadingItem]
-
+    static belongsTo = [topic: Topic, createdBy: User]
     static transients = ['ratinginfo']
 
 /*     RatingInfoVO getRatingInfo(){
@@ -42,50 +42,50 @@ abstract class Resource {
     }*/
 
     static List totalVotes() {
-            List totalVoteCount = ResourceRating.createCriteria().list{
-                projections {
-                    count()
-                }
-                createAlias("resource",'r')
-                groupProperty('r.topic')
-                groupProperty('r.createdBy')
+        List totalVoteCount = ResourceRating.createCriteria().list {
+            projections {
+                count()
             }
+            createAlias("resource", 'r')
+            groupProperty('r.topic')
+            groupProperty('r.createdBy')
+        }
         return totalVoteCount
     }
 
-    static Integer totalScore(){
-        Integer totalScoreCount= ResourceRating.createCriteria().get {
-            projections{
+    static Integer totalScore() {
+        Integer totalScoreCount = ResourceRating.createCriteria().get {
+            projections {
                 sum("score")
             }
         }
         return totalScoreCount
     }
 
-    static Integer AvgScore(){
-        Integer Avg=ResourceRating.createCriteria().get {
-            projections{
+    static Integer AvgScore() {
+        Integer Avg = ResourceRating.createCriteria().get {
+            projections {
                 avg("score")
             }
         }
         return Avg
     }
 
-    static List getTopPost(){
-        List topPost=ResourceRating.createCriteria().list {
+    static List getTopPost() {
+        List topPost = ResourceRating.createCriteria().list {
             projections {
-                createAlias('resource','r')
+                createAlias('resource', 'r')
                 groupProperty('r.id')
-                count('r.id','count')
+                count('r.id', 'count')
             }
-            order('count','desc')
+            order('count', 'desc')
         }
         return topPost
     }
 
-    static List getrecentShare(){
-        List recentShare= Resource.createCriteria().list {
-            projections{
+    static List getrecentShare() {
+        List recentShare = Resource.createCriteria().list {
+            projections {
                 order("dateCreated", "desc")
             }
             maxResults(3)
@@ -93,22 +93,21 @@ abstract class Resource {
         return recentShare
     }
 
-    def canViewBy(){
-        if(this.topic.canViewedBy(session.user)){
+    def canViewBy() {
+        if (this.topic.canViewedBy(session.user)) {
             log.info("resource can be viewed")
         }
 
     }
 
 
-    static namedQueries={
-        search{ ResourceSearchCO rco ->
-            if(rco.topicId){
-                eq('topicId',rco.topicId)
+    static namedQueries = {
+        search { ResourceSearchCO rco ->
+            if (rco.topicId) {
+                eq('topicId', rco.topicId)
             }
-            if(rco.visibility)
-            {
-                eq('PUBLIC',rco.visibility)
+            if (rco.visibility) {
+                eq('PUBLIC', rco.visibility)
             }
 
         }

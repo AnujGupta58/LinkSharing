@@ -8,10 +8,16 @@
     </g:form>
 </head>
 <body>
-<div class="col-md-4">
-    <g:render template="info"/>
+<div class="col-lg-6">
+    <div class="col-lg-12">
+        <g:render template="info"/>
+    </div>
+    <div class="col-lg-12">
+        <g:render template="/subscription/subscriptions"/>
+    </div>
+
 </div>
-<div class="col-md-8">
+<div class="col-lg-6">
  %{--   <g:render template="/topic/showTopic"/>--}%
     <g:render template="/topic/trendingTopic"/>
 </div>

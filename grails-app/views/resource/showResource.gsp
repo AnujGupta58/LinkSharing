@@ -15,51 +15,53 @@
     <div class="col-lg-6">
         <div class="panel panel-default">
             <div class="panel-body">
-                %{--<g:each in="${topicResource}" var="posts">--}%
+                <g:each in="${resourceDisplay}" var="posts">
                 <div class="row" style="padding-bottom: 10px">
                     <div class="col-lg-2">
                         <asset:image src="Avatar.png" class="img-responsive"/>
                     </div>
 
                     <div class="col-lg-10">
-                        <div class="text">Anuj
-                            <p class="text-muted">@</p>
+                        <div class="text">${posts.createdByName}
+                            <p class="text-muted">@${posts.createdByEmail}</p>
 
                             <div class="form-group" id="rating-ability-wrapper">
                                 <g:form controller="resourceRating" action="save" method="post">
                                     <label class="control-label">
                                         <span class="field-label-info"></span>
-                                        <input type="hidden" id="selected_rating" name="selected_rating" value=""
+                                        <input type="hidden" id="selected_rating" name="selected_rating" value="score"
                                                required="required">
                                     </label>
                                     <button type="button" class="btnrating btn btn-default btn-lg" data-attr="1"
-                                            id="rating-star-1">
+                                            name="score" value="1">
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </button>
                                     <button type="button" class="btnrating btn btn-default btn-lg" data-attr="2"
-                                            id="rating-star-2">
+                                            name="score" value="2">
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </button>
                                     <button type="button" class="btnrating btn btn-default btn-lg" data-attr="3"
-                                            id="rating-star-3">
+                                             name="score" value="3">
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </button>
                                     <button type="button" class="btnrating btn btn-default btn-lg" data-attr="4"
-                                            id="rating-star-4">
+                                             name="score" value="4">
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </button>
                                     <button type="button" class="btnrating btn btn-default btn-lg" data-attr="5"
-                                            id="rating-star-5">
+                                             name="score" value="5">
                                         <i class="fa fa-star" aria-hidden="true"></i>
                                     </button>
+                                    <g:hiddenField name="score" value="${posts.resourceId}"/>
+                                    <input type="submit" value="score">
                                 </g:form>
                             </div>
                         </div>
-                        <span class="text-primary" style="float: right">Topic</span>
+                        <span class="text-primary" style="float: right">${posts.topicName}</span>
 
                         <div class="text">
                             <p>
-                                Description
+                                ${posts.description}
                             </p>
                         </div>
 
@@ -102,7 +104,7 @@
                     </div>
                 </div>
                 <hr>
-                %{--</g:each>--}%
+                </g:each>
             </div>
         </div>
     </div>

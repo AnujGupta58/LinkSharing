@@ -42,16 +42,6 @@
                         </g:else>
                     </a></td>
                 </tr>
-            %{--       <tr>
-                       <td>Mary</td>
-                       <td>Moe</td>
-                       <td>mary@example.com</td>
-                   </tr>
-                   <tr>
-                       <td>July</td>
-                       <td>Dooley</td>
-                       <td>july@example.com</td>
-                   </tr>--}%
             </g:each>
             </tbody>
         </table>

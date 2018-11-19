@@ -20,8 +20,7 @@ class LoginController {
 
 
     @Transactional
-    def register() {
-       User user = new User([firstName: params.firstName, lastName: params.lastName, email: params.email, password: params.password, confirmPassword: params.confirmPassword, photo: params.photo])
+    def register(User user) {
 //        user.properties=params
       //  UserVO user = new UserVO( firstName: params.firstName, lastName: params.lastName, email: params.email, password: params.password, confirmPassword: params.confirmPassword, photo: params.photo )
       //  user.isActive=true
@@ -34,13 +33,13 @@ class LoginController {
         } else {
             render "Error ${user.errors.allErrors.collect { message(code: it) }.join(", ")}"
         }
-        render(view: "index", model: [firstName: firstName, lastName: lastName, email: email, password: password, confirmPassword: confirmPassword, photo: photo])
+        render(view: "index", model: [user :user])
     }
 
     def loginhandler(String username, String password) {
         User user = User.findByEmailAndPassword(username, password)
         if (user) {
-            //user.isActive=true
+//            user.isActive=true
             if (user.isActive) {
                 session["user"] = user
                 flash.message="User logged in successfully"

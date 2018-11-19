@@ -14,13 +14,13 @@ class DocumentResourceController {
             Topic topic = Topic.get(co.id)
             Resource documentResource = new DocumentResource(topic: topic, createdBy: user, description: co.description, filepath: co.filepath)
             if(documentResource.save(flush: true, failOnError: true)){
-                flash.message="Link Resource created successfully ${documentResource}"
-                log.info("Link Resource created successfully ${documentResource}")
+                flash.message="Document Resource created successfully ${documentResource}"
+                log.info("Document Resource created successfully ${documentResource}")
                 redirect(controller:'user', action:'index')
             }
             else{
                 documentResource.errors.allErrors.collect {message(code: it)}.join(",")
-                flash.message="Link Resource not created ${documentResource}"
+                flash.message="Document Resource not created ${documentResource}"
                 redirect(controller:'user', action:'index')
             }
         }

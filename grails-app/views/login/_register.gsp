@@ -16,30 +16,30 @@
                 <div class="form-group col-sm-12">
 
                     <label for="firstName">First Name*</label>
-                    <input type="text" name="firstName" value="${firstName}" class="form-control" id="firstName"
+                    <input type="text" name="firstName" value="${user?.firstName}" class="form-control" id="firstName"
                            placeholder="Enter First Name">
                 </div>
 
                 <div class="form-group col-sm-12">
                     <label for="lastName">Last Name*</label>
-                    <input type="text" name="lastName" value="${lastName}" class="form-control" id="lastName"
+                    <input type="text" name="lastName" value="${user?.lastName}" class="form-control" id="lastName"
                            placeholder="Enter last Name">
                 </div>
 
                 <div class="form-group col-sm-12">
                     <label for="email">Email*</label>
-                    <input type="email" name="email" value="${email}" class="form-control" id="email" placeholder="Enter Email">
+                    <input type="email" name="email" value="${user?.email}" class="form-control" id="email" placeholder="Enter Email">
                 </div>
 
                 <div class="form-group col-sm-12">
                     <label for="password">Password*</label>
-                    <input type="password" name="password" value="${password}" class="form-control" id="password"
+                    <input type="password" name="password" value="" class="form-control" id="password"
                            placeholder="Enter Password">
                 </div>
 
                 <div class="form-group col-sm-12">
                     <label for="confirmpassword">Confirm Password*</label>
-                    <input type="password" name="confirmpassword" value="${confirmpassword}" class="form-control" id="confirmpassword"
+                    <input type="password" name="confirmpassword" value="" class="form-control" id="confirmpassword"
                            placeholder="Enter Confirm Password">
                 </div>
 
