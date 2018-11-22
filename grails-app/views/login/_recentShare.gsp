@@ -10,7 +10,7 @@
 <div class="col-sm-12"><div class="panel panel-primary">
     <div class="panel-heading">Recent Shares</div>
 
-    <div class="panel-body" style="height: 130px; width: 100%;">
+    <div class="panel-body">
         <g:each in="${recentShares}" var="resource">
 
             <div class="media">
@@ -19,16 +19,16 @@
                 </div>
 
                 <div class="media-body">
-                    <h4 class="media-heading">${resource.name}</h4>
+                    <h4 class="media-heading">${resource.topicName}</h4>
 
-                    <p>Java</p>
+                    <p>${resource.description}</p>
 
                     <div><a href="#" style="  color: red; "><i class="fab fa-google-plus-g"></i></a>  <a href="#"
                                                                                                          style="  color: blue; "><i
                                 class="fab fa-facebook-square"></i></a>   <a href="#" style="  color: blue; "><i
                             class="fab fa-twitter"></i></a>
 
-                        <p style="text-align: right;margin-top: -20px;"><a>View post</a></p></div>
+                        <p style="text-align: right;margin-top: -20px;"><a href="${createLink(controller: 'topic', action: 'show', id: "${resource.topicId}")}">View post</a></p></div>
                 </div>
             </div>
             <br>
@@ -39,4 +39,3 @@
 </div>
 
 </body>
-</html>

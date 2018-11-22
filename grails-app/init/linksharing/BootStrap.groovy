@@ -121,7 +121,7 @@ class BootStrap {
                 if (readingItem.save(failOnError: true, flush: true)) {
                     log.info "Reading item : ${readingItem} is created successfully"
                 } else {
-                    log.error "Error in creating ReadingItem : ${readingItem.errors.allErrors} "
+                    log.error "Error in creating ReadingItemVO : ${readingItem.errors.allErrors} "
                 }
             }
         }

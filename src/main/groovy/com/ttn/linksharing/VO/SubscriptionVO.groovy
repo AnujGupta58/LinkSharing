@@ -3,7 +3,7 @@ package com.ttn.linksharing.VO
 import com.ttn.linksharing.enumeration.Seriousness
 import com.ttn.linksharing.enumeration.Visibility
 
-class SubscriptionVO {
+class   SubscriptionVO {
     String createdByName
     String createdByemail
     Seriousness seriousness
@@ -13,4 +13,5 @@ class SubscriptionVO {
     Integer topicId
     Integer subscriptionCount
     Integer resourceCount
+    boolean isSubscribed
 }

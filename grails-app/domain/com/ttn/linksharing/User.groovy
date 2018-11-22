@@ -2,9 +2,10 @@ package com.ttn.linksharing
 
 import com.ttn.linksharing.CO.SearchCO
 import com.ttn.linksharing.VO.RatingInfoVO
+import com.ttn.linksharing.VO.SubscriptionVO
+import com.ttn.linksharing.VO.TopicVO
 import groovy.beans.Bindable
 
-@Bindable
 class User {
 
     String email
@@ -59,8 +60,8 @@ class User {
         [firstName, lastName].findAll { it }.join(" ")
     }
 
-    static List getUnReadResource(SearchCO co, User user) {
-        List unReaditem = ReadingItem.createCriteria().list(max: 9, offset: 0) {
+/*    static List getUnReadResource(SearchCO co, User user) {
+        List unReaditem = ReadingItemVO.createCriteria().list(max: 9, offset: 0) {
             projections {
                 eq("isRead", false)
                 createAlias("resource", 'r')
@@ -72,20 +73,46 @@ class User {
             }
         }
         return unReaditem
+    }*/
+
+    static List<ReadingItem> getUnReadResource(User user) {
+        List<ReadingItem> unReaditem = ReadingItem.createCriteria().list() {
+            projections {
+                eq("isRead", false)
+                createAlias("resource", 'r')
+                property('r.topic')
+                eq('user',user)
+                //groupProperty("user")
+            }
+        }
+        return unReaditem
     }
+
+
 
     List getUserTopics() {
         List topic = Topic.findAllByCreatedBy(this)
         return topic
     }
 
-    List<Topic> getSubscribedTopic() {
-        List<Topic> subscribedTopic = []
-        if (this.subscriptions)
+/*    List<SubscriptionVO> getSubscribedTopic() {
+
+        if (this.subscriptions) {
+            List<SubscriptionVO> subscribedTopic = []
             this.subscriptions.each {
-                subscribedTopic.add(it.topic)
+                subscribedTopic.add(new SubscriptionVO(topicId: it.topic.id, topicName: it.topic.name, createdByName: it.topic.createdBy.getFullName(),createdByemail: it.topic.createdBy.email,resourceCount: it.topic.resources.size(),subscriptionCount: it.topic.subscriptions.size()))
             }
+        }
         return subscribedTopic
+    }*/
+
+    List<SubscriptionVO> getSubscribedTopic(User user){
+        List<Subscription> subscribedTopic = Subscription.findAllByUser(user)
+        List<SubscriptionVO> userSubscribedTopic = []
+        subscribedTopic.each {
+            userSubscribedTopic.add(new SubscriptionVO(topicName: it.topic.name,createdByName: it.user.firstName,createdByemail: it.user.email,resourceCount: it.topic.resources.size(),subscriptionCount: it.topic.subscriptions.size(),visibility: it.topic.visibility,seriousness: it.seriousness))
+        }
+        return userSubscribedTopic
     }
 
     Integer getSubscriptionCount() {
@@ -114,31 +141,16 @@ class User {
 
     }
 
-    def isSubscribed(Long id) {
+    static boolean isSubscribed(Long id) {
         Topic topic = Topic.findById(id)
         Subscription subscription = Subscription.findByTopic(topic)
         if (subscription) {
-            log.info("Subscription found")
+//            log.info("Subscription found")
             return true
         } else {
-            log.info("Subscription not found")
+//            log.info("Subscription not found")
+            return false
         }
-        /*   List<Subscription> subscription= Subscription.createCriteria().list {
-               projections{
-
-               }
-
-           }*/
-
-    }
-
-    List subscribedUser(){
-        List<Subscription> subscription = Subscription.findAllByUser(this)
-        List subscribedtopics=[]
-        subscription.each {
-
-        }
-
     }
 
 

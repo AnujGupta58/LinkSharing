@@ -60,7 +60,7 @@ class ResourceController {
           render "Info  ${ratingInfo}"*/
 
         Resource resource = Resource.findById(params.id)
-        ResourceVO resourceDisplay= new ResourceVO(topicName: resource.topic.name, description: resource.description, createdByName: resource.createdBy.firstName,createdByEmail: resource.createdBy.email, isLink: resource.getType())
+        ResourceVO resourceDisplay= new ResourceVO(resourceId: resource.id, topicName: resource.topic.name, description: resource.description, createdByName: resource.createdBy.firstName,createdByEmail: resource.createdBy.email, isLink: resource.getType())
         render(view: '/resource/showResource',model: [resourceDisplay:resourceDisplay])
     }
 
@@ -71,16 +71,15 @@ class ResourceController {
         }
     }
 
-    def recentShare(){
+ /*   def recentShare(){
         List resource= Resource.getrecentShare()
-        log.info("${resource}")
         List<ResourceVO> recentShares=[]
         resource.each {
             recentShares.add(new ResourceVO(topicName: resource.topic.name, description: resource.description, createdByName: resource.createdBy.firstName,createdByEmail: resource.createdBy.email))
         }
 
         render(view: '/layouts/main', model: [recentShares:recentShares])
-    }
+    }*/
 
     def search(ResourceSearchCO resourceSearchCO) {
         //  Resource resource = Resource.findByTopic(Topic.findByVisibility(Topic.Visibility.PUBLIC))

@@ -76,15 +76,18 @@ abstract class Resource {
             projections {
                 createAlias('resource', 'r')
                 groupProperty('r.id')
+                property('r.createdBy')
+                property('r.topic')
                 count('r.id', 'count')
             }
             order('count', 'desc')
+            maxResults(3)
         }
         return topPost
     }
 
     static List getrecentShare() {
-        List recentShare = Resource.createCriteria().list {
+        List<Resource> recentShare = Resource.createCriteria().list {
             projections {
                 order("dateCreated", "desc")
             }

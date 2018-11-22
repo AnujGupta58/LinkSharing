@@ -1,6 +1,6 @@
 package com.ttn.linksharing
 
-
+import com.ttn.linksharing.VO.ResourceVO
 import grails.transaction.Transactional
 
 
@@ -9,12 +9,24 @@ class LoginController {
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index() {
-        log.info("i am in login action")
+        log.info("In login action")
         if (session.user) {
             //render (view: "index")
             forward controller: 'User', action: 'index'
         } else {
-            //render ">>>>>>>>${session["user"]}"
+            log.info("In login index display recent share and top post")
+            List<Resource> resource= Resource.getrecentShare()
+            List<ResourceVO> recentShares=[]
+            resource.each {
+                recentShares.add(new ResourceVO(topicId: it.topic.id, topicName: it.topic.name, description: it.description, createdByName: it.createdBy.firstName,createdByEmail: it.createdBy.email))
+            }
+
+            List<Resource> resources = Resource.getTopPost()
+            List<ResourceVO> topPosts=[]
+            resources.each {
+                topPosts.add(new ResourceVO(topicName: it[1],description: it[2]))
+            }
+            render(view: '/login/index', model: [recentShares:recentShares,topPosts:topPosts])
         }
     }
 
@@ -37,6 +49,7 @@ class LoginController {
     }
 
     def loginhandler(String username, String password) {
+
         User user = User.findByEmailAndPassword(username, password)
         if (user) {
 //            user.isActive=true
@@ -67,16 +80,24 @@ class LoginController {
 //                flash.message = "Password changed Successfully"
                 forward(controller: 'user', action: 'index')
             }
+            else {
+                flash.error = "Unable to change Password"
+            }
         } else {
-            flash.error = "Unable to change Password"
+            flash.error = "User not found"
 //            render "password not changed"
         }
         render(view: 'forgotPassword' , model: [email: 'email',password: 'password',confirmPassword: 'confirmpassword'])
+    }
+
+    def forgotPasswordPage(){
+        render(view: '/login/forgotPassword')
     }
 
     def logout() {
         session.invalidate()
 //        redirect(action: loginhandler())
         forward action: 'index'
+        session.invalidate()
     }
 }

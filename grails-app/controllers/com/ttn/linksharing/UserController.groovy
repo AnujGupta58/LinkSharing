@@ -1,6 +1,8 @@
 package com.ttn.linksharing
 
 import com.ttn.linksharing.CO.ResourceCO
+import com.ttn.linksharing.VO.ReadingItemVO
+import com.ttn.linksharing.VO.SubscriptionVO
 import com.ttn.linksharing.VO.UserVO
 import com.ttn.linksharing.VO.TopicVO
 import grails.transaction.Transactional
@@ -31,7 +33,19 @@ class UserController {
     def index() {
         /*    List UnReadItemLeft=User.getUnReadResource(co,session.user)
             render "UnReadResources --->  ${UnReadItemLeft}"*/
-            render (view: "index")
+        List<Topic> trending=Topic.getTrendingTopics()
+        List<TopicVO> trendingTopics=[]
+        trending.each {
+            trendingTopics.add(new TopicVO(name: it[1], createdBy: it[2]))
+        }
+        User user = session.user
+      /*  List<ReadingItem> unreadItems= User.getUnReadResource(user)
+        List<ReadingItemVO> inbox=[]
+        unreadItems.each {
+            inbox.add(new ReadingItemVO(topicName: it.resource, createdByemail: it.resource))
+        }*/
+        List<SubscriptionVO> userTopics=user.getSubscribedTopic(user)
+        render (view: "index" , model: [trendingTopics:trendingTopics/*,inbox:inbox*/,userSubscribedTopics:userTopics])
     }
 
     def show(Integer id) {
@@ -107,6 +121,7 @@ class UserController {
         resourceList.each {
             userResourceList.add(new ResourceCO(resourceId: it.id,topicId: it.topic.id, topicName: it.topic.name,description: it.description,createdBy: it.createdBy.getFullName()))
         }
+
 
         render(view:'/user/profile', model: [userInfo:userInfo,userTopicList:userTopicList,userResourceList:userResourceList])
     }

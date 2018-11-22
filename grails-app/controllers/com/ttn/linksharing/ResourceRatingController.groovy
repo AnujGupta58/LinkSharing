@@ -9,11 +9,12 @@ class ResourceRatingController {
 
     @Transactional
     def save(){
-        Resource resource=Resource.findByCreatedBy(session.user)
-        ResourceRating resourceRating = new ResourceRating(resource: resource,user: session.user, score: params.score)
+        Resource resource=Resource.get(params.id)
+        ResourceRating resourceRating = new ResourceRating(resource: resource,user: session.user, score: params.star)
         if(resourceRating.save(flush:true,failOnError:true)){
             flash.message="Rating is successfully saved"
             log.info("resource rating is done")
+            render(view : '/resource/showResource')
         }
         else{
             resourceRating.errors.allErrors.collect {message(code: it)}.join(",")

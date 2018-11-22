@@ -48,10 +48,11 @@ class Topic {
                 createAlias("topic", "t")
                 count("topic", 'counting')
                 property("t.name")
+                property("t.createdBy")
             }
             groupProperty("topic")
             order('counting', 'desc')
-            order("b.name", 'desc')
+            order("t.name", 'desc')
             maxResults(5)
         }
         return ResourceCount

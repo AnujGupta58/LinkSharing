@@ -10,9 +10,9 @@ class ReadingItemController {
     }
 
     def changeIsRead(Long Id, Boolean isRead) {
-        //ReadingItem readingItem=ReadingItem.get(Id)
+        //ReadingItemVO readingItem=ReadingItemVO.get(Id)
         //readingItem.isRead=isRead
-        if (User.executeUpdate("update ReadingItem r set r.isRead=:isRead where r.id=:Id", [isRead: isRead, Id: Id])) {
+        if (User.executeUpdate("update ReadingItemVO r set r.isRead=:isRead where r.id=:Id", [isRead: isRead, Id: Id])) {
             render "SUCCESS"
         } else {
             render "Invalid Input"
@@ -27,7 +27,7 @@ class ReadingItemController {
         if(session.user){
             ReadingItem readingItem=new ReadingItem(user: user, resource: resource, isRead: params.isRead)
             if(readingItem.save(flush: true,failOnError: true)){
-                render "ReadingItem Saved Successfully"
+                render "ReadingItemVO Saved Successfully"
             }
         }
     }

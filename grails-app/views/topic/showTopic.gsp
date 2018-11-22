@@ -116,69 +116,72 @@
 
 
     <div class="col-lg-6">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Post : ${topicVO.name}
-            </div>
+        <g:if test="${session.user}">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Post : ${topicVO.name}
+                </div>
 
-            <div class="panel-body">
-                <g:each in="${topicResource}" var="posts">
-                    <div class="row" style="padding-bottom: 10px">
-                        <div class="col-lg-2">
-                            <asset:image src="Avatar.png" class="img-responsive"/>
-                        </div>
-
-                        <div class="col-lg-10">
-                            <span class="text">${posts.createdByName}
-                                <p class="text-muted">@${posts.createdByEmail}</p></span>
-                            <span class="text-primary" style="float: right">Topic : ${posts.topicName}</span>
-
-                            <div class="text">
-                                <p>
-                                    Description : ${posts.description}
-                                </p>
+                <div class="panel-body">
+                    <g:each in="${topicResource}" var="posts">
+                        <div class="row" style="padding-bottom: 10px">
+                            <div class="col-lg-2">
+                                <asset:image src="Avatar.png" class="img-responsive"/>
                             </div>
 
-                            <div>
-                                <div class="col-lg-4" style="padding-left: 0px;padding-right: 0px">
-                                    <!-- <i class="fab fa-facebook fa-2x"> </i> -->
-                                    <!-- <i class="fab fa-tumblr fa-2x"> </i> -->
-                                    <span style="padding-left: 1px"><i class="fab fa-facebook fa-2x"></i></span>
-                                    <span style="padding-left: 10px"><i class="fab fa-tumblr fa-2x"></i></span>
-                                    <span style="padding-left: 10px"><i class="fab fa-google-plus-g fa-2x"></i></span>
+                            <div class="col-lg-10">
+                                <span class="text">${posts.createdByName}
+                                    <p class="text-muted">@${posts.createdByEmail}</p></span>
+                                <span class="text-primary" style="float: right">Topic : ${posts.topicName}</span>
+
+                                <div class="text">
+                                    <p>
+                                        Description : ${posts.description}
+                                    </p>
                                 </div>
 
-                                <div class="col-lg-8">
-                                    <g:if test="${posts.isLink}">
-                                        <div class="col-lg-2 col-lg-offset-2"
-                                             style="padding-left: 0px;padding-right: 0px;">
-                                            <a href="#" class="text-primary"
-                                               style="text-decoration: underline;">View Link</a>
-                                        </div>
-                                    </g:if>
-                                    <g:else>
-                                        <div class="col-lg-2"
-                                             style="padding-left: 0px;padding-right: 0px;">
-                                            <a href="#" class="text-primary"
-                                               style="text-decoration: underline;">Download</a>
-                                        </div>
-                                    </g:else>
-
-                                    <div class="col-lg-2" style="padding-left: 20px;padding-right: 0px;">
-                                        <a href="#" class="text-primary"
-                                           style="text-decoration: underline;">Mark As Read</a>
+                                <div>
+                                    <div class="col-lg-4" style="padding-left: 0px;padding-right: 0px">
+                                        <!-- <i class="fab fa-facebook fa-2x"> </i> -->
+                                        <!-- <i class="fab fa-tumblr fa-2x"> </i> -->
+                                        <span style="padding-left: 1px"><i class="fab fa-facebook fa-2x"></i></span>
+                                        <span style="padding-left: 10px"><i class="fab fa-tumblr fa-2x"></i></span>
+                                        <span style="padding-left: 10px"><i class="fab fa-google-plus-g fa-2x"></i>
+                                        </span>
                                     </div>
 
-                                    <div class="col-lg-2" style="padding-left: 20px;padding-right: 0px;">
-                                        <a href="${createLink(controller: 'resource', action: 'show', id: "${posts.resourceId}")}">View Post</a>
+                                    <div class="col-lg-8">
+                                        <g:if test="${posts.isLink}">
+                                            <div class="col-lg-2 col-lg-offset-2"
+                                                 style="padding-left: 0px;padding-right: 0px;">
+                                                <a href="#" class="text-primary"
+                                                   style="text-decoration: underline;">View Link</a>
+                                            </div>
+                                        </g:if>
+                                        <g:else>
+                                            <div class="col-lg-2"
+                                                 style="padding-left: 0px;padding-right: 0px;">
+                                                <a href="#" class="text-primary"
+                                                   style="text-decoration: underline;">Download</a>
+                                            </div>
+                                        </g:else>
+
+                                        <div class="col-lg-2" style="padding-left: 20px;padding-right: 0px;">
+                                            <a href="#" class="text-primary"
+                                               style="text-decoration: underline;">Mark As Read</a>
+                                        </div>
+
+                                        <div class="col-lg-2" style="padding-left: 20px;padding-right: 0px;">
+                                            <a href="${createLink(controller: 'resource', action: 'show', id: "${posts.resourceId}")}">View Post</a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <hr>
-                </g:each>
+                        <hr>
+                    </g:each>
+                </div>
             </div>
-        </div>
+        </g:if>
     </div>
 </div>

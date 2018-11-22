@@ -9,7 +9,7 @@ class ReadingItem {
 
 
     static constraints = {
-        resource(nullable: false,unique: ['user'])          // ReadingItem resource should be unique per user
+        resource(nullable: false,unique: ['user'])          // ReadingItemVO resource should be unique per user
         user(nullable: false)
         isRead(nullable: false)             // User,isRead and resource cannot be null for readingItem
         dateCreated(date: Date,nullable: true)

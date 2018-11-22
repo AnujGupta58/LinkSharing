@@ -24,8 +24,8 @@ class Subscription {
 
     static mapping = {
         seriousness defaultValue:"'SERIOUS'"
-        topic lazy: false
-        user lazy: false
+      /*  topic lazy: false
+        user lazy: false*/
 
     }
     static belongsTo = [topic: Topic, user: User]

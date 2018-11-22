@@ -7,7 +7,7 @@
 </head>
 
 <body>
-<div class="col-lg-12">
+
 <g:if test="${session.user}">
     <div class="panel panel-default">
         <div class="panel-body">
@@ -37,6 +37,5 @@
         </div>
     </div>
 </g:if>
-</div>
 </body>
 </html>

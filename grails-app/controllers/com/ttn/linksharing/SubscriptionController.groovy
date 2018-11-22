@@ -43,14 +43,14 @@ class SubscriptionController {
 //        render"Subscription Deleted"
     }
 
-    def subscriptionList(){
-        List<Subscription> subscriptionList = Subscription.findAllByUser(session.user)
-        List<SubscriptionVO> subscribedTopics=[]
-        subscriptionList.each {
-            subscribedTopics.add(new SubscriptionVO(createdByName: it.topic.createdBy.firstName,createdByemail: it.topic.createdBy.email))
+  /*  def subscriptionList(){
+        List<Topic> userTopics= Topic.findAllByCreatedBy(session.user)
+        List<SubscriptionVO> userSubscribedTopics=[]
+        userTopics.each {
+            userSubscribedTopics.add(new SubscriptionVO(createdByName: it.createdBy.firstName,createdByemail: it.createdBy.email))
         }
 
-        render(view: '_subscriptions', model: [subscribedTopics:subscribedTopics])
-    }
+        render(view: '/user/index', model: [userSubscribedTopics:userSubscribedTopics])
+    }*/
 }
 

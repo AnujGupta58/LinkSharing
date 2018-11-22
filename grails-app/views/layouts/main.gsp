@@ -18,12 +18,11 @@
 
 <body>
 <div class="container">
-<header class="page-header well" style="padding-bottom: 50px;margin-left: 10px;margin-right: 10px;">
+<header class="page-header well" style="padding-bottom: 50px;">
     <div class="col-lg-4">
         <span>
             <a class="text-primary" href="${createLink(controller: 'login',action:'index')}" style="text-decoration: underline"><h3>Link Sharing</h3></a>
         </span>
-
     </div>
     <div class="col-lg-8">
         <div class="col-lg-5">
@@ -78,14 +77,13 @@
                     <li><g:link controller="login" action="logout">Logout</g:link></li>
                 </ul>
             </div>
-
         </g:if>
     </div>
 </header>
 </div>
 
-<div style="color: green">${flash.message}</div>
-<div style="color: red">${flash.error}</div>
+<div id="messages" style="color:white;background: green;"><center>${flash.message}</center></div>
+<div style="color:white;background: red;"><center>${flash.error}</center></div>
 <div class="body">
 
     <g:layoutBody/>
@@ -95,5 +93,9 @@
     Powered By TTN
 </div>
 <asset:javascript src="application.js"/>
+<script>
+    var x = document.getElementById("messages")
+    setTimeout(function(){ x.value = "2 seconds" }, 2000);
+</script>
 </body>
 </html>
