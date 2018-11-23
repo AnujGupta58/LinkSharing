@@ -16,7 +16,9 @@
             %{--<form class="form-horizontal" action="#">--}%
                 <g:form controller="documentResource" action="create">
                     <div class="form-group">
-                        <label class="control-label col-sm-2" for="filepath">Document*:</label>
+
+
+                    <label class="control-label col-sm-2" for="filepath">Document*:</label>
 
                         <div class="col-sm-10">
                             <input type="file" class="form-control" id="filepath" name="filepath">

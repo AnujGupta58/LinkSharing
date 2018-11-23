@@ -36,7 +36,7 @@ class TopicController {
     def delete(Long id) {
         Topic topic = Topic.get(id)
         if (topic) {
-            topic.delete()
+            topic.delete(flush: true)
             flash.message = 'Topic Deleted'
             log.info('Topic Deleted')
             redirect(controller: 'user', action: 'profile')

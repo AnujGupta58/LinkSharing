@@ -39,7 +39,9 @@ class SubscriptionController {
 
     def delete(Long id){
         subscriptionService.delete(id)
-        redirect(controller: 'topic' , action: 'show')
+        flash.message="Subscription deleted"
+        render(view: '/user/index')
+        //redirect(controller: 'topic' , action: 'show')
 //        render"Subscription Deleted"
     }
 

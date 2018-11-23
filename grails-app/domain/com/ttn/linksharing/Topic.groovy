@@ -49,6 +49,8 @@ class Topic {
                 count("topic", 'counting')
                 property("t.name")
                 property("t.createdBy")
+                property("t.subscriptions")
+                property("t.resources")
             }
             groupProperty("topic")
             order('counting', 'desc')

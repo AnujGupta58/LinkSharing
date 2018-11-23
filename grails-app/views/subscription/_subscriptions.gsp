@@ -22,13 +22,9 @@
 
                     <div class="col-lg-4">
                         <span class="text-muted"></span>
-                        <a href="#" class="hyperlink">
-                            <g:if test="${subscription.isSubscribed}">
-                                Deactivate
-                            </g:if>
-                            <g:else>
-                                Activate
-                            </g:else></a>
+                        %{--<g:form controller="subscription" action="delete" id="${subscription.subscriptionId}">--}%
+                            <a href="${createLink(controller: 'subscription' , action: 'delete',id: "${subscription.subscriptionId}")}" class="hyperlink">Unsubscribe</a>
+                        %{--</g:form>--}%
                     </div>
 
                     <div class="col-lg-4">

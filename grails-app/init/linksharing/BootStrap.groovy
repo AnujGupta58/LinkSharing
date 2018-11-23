@@ -13,9 +13,17 @@ import com.ttn.linksharing.enumeration.Visibility
 class BootStrap {
 
     def init = { servletContext ->
-        /*    User adminUser = new User(email: "anujgupta@tothenew.com", confirmPassword: "qwerty", password: "qwerty", firstName: "Anuj", lastName: "Gupta", admin: true, isActive: false, photo: null)
-            adminUser.save(failOnError: true, flush: true)
-            if (adminUser.save()) {
+        if (!User.countByEmail("anujgupta@tothenew.com")) {
+            User admin = new User(email: "anujgupta@tothenew.com", confirmPassword: "qwerty", password: "qwerty", firstName: "Anuj", lastName: "Gupta", admin: true, isActive: true, photo: null)
+            if (admin.save(failOnError: true, flush: true)) {
+                log.info "User ${admin} is successfully added.. "
+            } else {
+                log.error "Error in creating admin"
+            }
+        }
+        /*    User admin = new User(email: "anujgupta@tothenew.com", confirmPassword: "qwerty", password: "qwerty", firstName: "Anuj", lastName: "Gupta", admin: true, isActive: false, photo: null)
+            admin.save(failOnError: true, flush: true)
+            if (admin.save()) {
                 log.info "User ${admin} is successfully added.. "
             } else {
                 log.error "Error in creating admin"
@@ -29,16 +37,16 @@ class BootStrap {
             } else {
                 log.error "Error in creating normal user ${user}"
             }*/
-        createUsers()
-        createTopics()
-        createResources()
-        subscribeTopic()
-        createReadingitem()
-        createResourceRating()
+        /*   createUsers()
+           createTopics()
+           createResources()
+           subscribeTopic()
+           createReadingitem()
+           createResourceRating()*/
 
     }
 
-    void createUsers() {
+/*    void createUsers() {
         if (!User.countByEmail("admin@tothenew.com")) {
             User adminUser = new User(email: "admin@tothenew.com", password: "admin", confirmPassword: "admin", firstName: "firstadmin", lastName: "lastadmin", admin: true, isActive: true, photo: null)
             adminUser.save(failOnError: true, flush: true)
@@ -141,7 +149,7 @@ class BootStrap {
             }
         }
     }
-
+*/
 
     def destroy = {
     }

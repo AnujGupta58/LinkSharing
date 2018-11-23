@@ -32,12 +32,13 @@ class LoginController {
 
 
     @Transactional
-    def register(User user) {
+    def register() {
 //        user.properties=params
-      //  UserVO user = new UserVO( firstName: params.firstName, lastName: params.lastName, email: params.email, password: params.password, confirmPassword: params.confirmPassword, photo: params.photo )
+        User user = new User( firstName: params.firstName, lastName: params.lastName, email: params.email, password: params.password, confirmPassword: params.confirmPassword, photo: params.photo.bytes )
       //  user.isActive=true
         log.info("${params}")
         if (user.save()) {
+            user.isActive=true
             //render (view: "_register")
             session.user=user
             forward(controller:'user' , action:'index')
@@ -98,6 +99,5 @@ class LoginController {
         session.invalidate()
 //        redirect(action: loginhandler())
         forward action: 'index'
-        session.invalidate()
     }
 }

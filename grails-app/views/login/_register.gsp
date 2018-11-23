@@ -4,7 +4,7 @@
         <div class="panel-heading">Register</div>
 
         <div class="panel-body">
-            <g:form controller="login" action="register">
+            <g:uploadForm controller="login" action="register" method="post" enctype="multipart/form-data">
                 <div class="form-group col-sm-12">
 
                     <label for="firstName">First Name*</label>
@@ -42,7 +42,7 @@
 
                 <div class="form-group col-sm-12">
                     Photo:<br>
-                    <input type="file" name="fileupload" value="fileupload" id="fileupload"><br><br>
+                    <input type="file" name="photo" id="photo"><br><br>
                 </div>
 
                 <div class="form-group col-sm-12">
@@ -50,20 +50,22 @@
                             style="float: right; margin-top: -30px;">Submit</button>
                 </div>
                 <script>
-                    var password = document.getElementById("password")
+              /*      var password = document.getElementById("password")
                         , confirmpassword = document.getElementById("confirmpassword");
 
                     function validatePassword() {
                         if (password.value != confirmpassword.value) {
                             confirmpassword.setCustomValidity("Passwords Don't Match");
+                            return false
                         } else {
                             confirmpassword.setCustomValidity('');
+                            return true
                         }
-                    }
+                    }*/
 
-                    password.onchange = validatePassword;
+                   /* password.onchange = validatePassword;
                     confirmpassword.onkeyup = validatePassword;
-
+*/
                     function myFunction() {
                         var x = document.getElementById("password");
                         if (x.type === "password") {
@@ -73,7 +75,7 @@
                         }
                     }
                 </script>
-            </g:form>
+            </g:uploadForm>
         </div>
     </div>
 </div>

@@ -154,7 +154,7 @@
                                         <g:if test="${posts.isLink}">
                                             <div class="col-lg-2 col-lg-offset-2"
                                                  style="padding-left: 0px;padding-right: 0px;">
-                                                <a href="#" class="text-primary"
+                                                <a href="${createLink(controller: 'linkResource', action: 'viewLink',id: "${posts.resourceId}")}" class="text-primary"
                                                    style="text-decoration: underline;">View Link</a>
                                             </div>
                                         </g:if>

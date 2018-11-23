@@ -10,6 +10,13 @@ class LinkResourceController {
         render("LinkResourceController index")
     }
 
+    def viewLink(){
+        LinkResource link=LinkResource.get(params.id)
+        if(link){
+            render(link.url)
+        }
+    }
+
     @Transactional
     def create(TopicCO co) {
         User user = session.user

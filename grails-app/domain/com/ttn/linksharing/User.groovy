@@ -22,7 +22,7 @@ class User {
     static constraints = {
         email(unique: true, blank: false, email: true, nullable: false, bindable: true)
         // Email should be unique, email type, not null, not blank
-        password(size: 5..10, nullable: false, blank: false, bindable: true, validator: { val, obj ->
+        password(size: 5..15, nullable: false, blank: false, bindable: true, validator: { val, obj ->
             if (obj.confirmPassword) {
                 return (val == obj.confirmPassword) ? true : ['mismatch.password']
             }
@@ -31,7 +31,7 @@ class User {
         firstName(nullable: false, bindable: true)
         lastName(nullable: false, bindable: true)
         //FirstName,LastName shoule not be null and not blank
-        photo(nullable: true, bindable: true)
+        photo(nullable: false, bindable: true)
         // Photo, Admin and Active field can be null
         admin(nullable: true, bindable: true)
         /*   confirmPassword(size: 5..10, bindable: true, nullable: false, blank: false, validator: { val, obj ->
@@ -110,7 +110,7 @@ class User {
         List<Subscription> subscribedTopic = Subscription.findAllByUser(user)
         List<SubscriptionVO> userSubscribedTopic = []
         subscribedTopic.each {
-            userSubscribedTopic.add(new SubscriptionVO(topicName: it.topic.name,createdByName: it.user.firstName,createdByemail: it.user.email,resourceCount: it.topic.resources.size(),subscriptionCount: it.topic.subscriptions.size(),visibility: it.topic.visibility,seriousness: it.seriousness))
+            userSubscribedTopic.add(new SubscriptionVO(subscriptionId: it.id, topicName: it.topic.name,createdByName: it.user.firstName,createdByemail: it.user.email,resourceCount: it.topic.resources.size(),subscriptionCount: it.topic.subscriptions.size(),visibility: it.topic.visibility,seriousness: it.seriousness))
         }
         return userSubscribedTopic
     }
